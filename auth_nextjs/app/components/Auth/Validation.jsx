@@ -1,7 +1,4 @@
-export const validateEmail = (email) => {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
-};
+import { isValidEmail, isValidPassword, isValidName } from "@/utils/validation";
 
 // validazioni all'invio del form
 export const validateFormData = (formData) => {
@@ -9,27 +6,28 @@ export const validateFormData = (formData) => {
   
     if (!formData.name) {
       errors.name = 'Name is required';
-    } else if (formData.name.length < 4 || formData.name.length > 19) {
-      errors.name = 'Name must be between 4 and 19 characters';
+    } else if (!isValidName(formData.name)) {
+      errors.name = 'Il nome deve contenere solo lettere maiuscole o minuscole e il carattere speciale _';
     }
   
     if (!formData.email) {
       errors.email = 'Email is required';
-    } else if (!validateEmail(formData.email)) {
+    } else if (!isValidEmail(formData.email)) {
       errors.email = 'Invalid email format';
     }
   
     if (!formData.password) {
       errors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters';
+    } else if (!isValidPassword(formData.password)) {
+      errors.password = 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one number, and one special character';
     }
+    
   
     return errors;
 };
 
 // validazioni mentre l'utente digita input
-export const handleInputChange = (e, formData, setFormData, errors, setErrors, validateEmail) => {
+export const handleInputChange = (e, formData, setFormData, errors, setErrors, isValidEmail, isValidName) => {
   const { name, value } = e.target;
   const newFormData = { ...formData, [name]: value };
   setFormData(newFormData);
@@ -39,8 +37,8 @@ export const handleInputChange = (e, formData, setFormData, errors, setErrors, v
   if (name === 'name') {
     if (!value) {
       newErrors.name = 'Name is required';
-    } else if (value.length < 4 || value.length > 19) {
-      newErrors.name = 'Name must be between 4 and 19 characters';
+    } else if (!isValidName(value)) {
+      newErrors.name = 'Il nome deve contenere solo lettere maiuscole o minuscole e il carattere speciale _';
     } else {
       newErrors.name = '';
     }
@@ -49,7 +47,7 @@ export const handleInputChange = (e, formData, setFormData, errors, setErrors, v
   if (name === 'email') {
     if (!value) {
       newErrors.email = 'Email is required';
-    } else if (!validateEmail(value)) {
+    } else if (!isValidEmail(value)) {
       newErrors.email = 'Invalid email format';
     } else {
       newErrors.email = '';
@@ -59,8 +57,8 @@ export const handleInputChange = (e, formData, setFormData, errors, setErrors, v
   if (name === 'password') {
     if (!value) {
       newErrors.password = 'Password is required';
-    } else if (value.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+    } else if (!isValidPassword(value)) {
+      newErrors.password = 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one number, and one special character';
     } else {
       newErrors.password = '';
     }
@@ -68,6 +66,3 @@ export const handleInputChange = (e, formData, setFormData, errors, setErrors, v
 
   setErrors(newErrors);
 };
-
-
- 

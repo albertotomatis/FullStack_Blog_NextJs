@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSession } from "next-auth/react";
-import { validateFormData, validateEmail, handleInputChange } from "@/app/components/Auth/Validation";
+import { validateFormData, handleInputChange } from "@/app/components/Auth/Validation";
+import { isValidEmail, isValidName } from "@/utils/validation";
 
 export default function RegisterForm() {
 
@@ -23,7 +24,7 @@ export default function RegisterForm() {
 
   // validazioni mentre l'utente digita
   const handleChange = (e) => {
-    handleInputChange(e, formData, setFormData, errors, setErrors, validateEmail);
+    handleInputChange(e, formData, setFormData, errors, setErrors, isValidEmail, isValidName);
   }
 
   // all'invio del form
@@ -51,14 +52,12 @@ export default function RegisterForm() {
         const form = e.target;
         form.reset();
         setShowSuccessToast(true); // Mostra la notifica di successo
-      } else {
+      } else if (res.status === 400) {
+        // Gestisci il caso in cui l'email esiste già
         const errorData = await res.json();
-        if (res.status === 400) {
-          // Se lo stato della risposta è 400, l'email esiste già
-          setErrors({ email: "Email already exists." });
-        } else {
-          console.log('User registration failed.');
-        }
+        setErrors({ email: errorData.message });
+      } else {
+        console.log('User registration failed.');
       }
     } catch (error) {
       console.log('Error during registration:', error);

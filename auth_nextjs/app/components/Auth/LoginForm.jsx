@@ -3,9 +3,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation"; 
-import { handleInputChange, validateEmail } from "@/app/components/Auth/Validation";
+import { handleInputChange } from "@/app/components/Auth/Validation";
+import { isValidEmail } from "@/utils/validation";
 import { useSession } from "next-auth/react";
-
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ export default function LoginForm() {
   // Validazioni mentre l'utente digita
   const handleChange = (e) => {
     clearErrors(); // Pulisci gli errori quando l'utente modifica i dati
-    handleInputChange(e, formData, setFormData, errors, setErrors, validateEmail);
+    handleInputChange(e, formData, setFormData, errors, setErrors, isValidEmail);
   }
 
   // All'invio del form
