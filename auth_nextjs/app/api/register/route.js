@@ -14,10 +14,24 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Funzione di validazione dell'email
+function isValidEmail(email) {
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  return emailRegex.test(email);
+}
+
 export async function POST(req) {
   try {
     const { name, email, password, role } = await req.json();
     await connectMongoDB();
+
+    // Verifica se l'email è valido
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { message: "Indirizzo email non valido." },
+        { status: 400 }
+      );
+    }
 
     // Verifica se l'email esiste già nel database prima di creare un nuovo utente
     const existingUser = await User.findOne({ email });
@@ -48,10 +62,11 @@ export async function POST(req) {
     });
 
     // Reindirizza l'utente alla pagina di verifica dell'email
-    return NextResponse.redirect('/email-verification-success');
+    return NextResponse.redirect('http://localhost:3000/email-verification-success');
   } catch (error) {
+    console.error(error); // Registra l'errore per una migliore diagnosi
     return NextResponse.json(
-      { message: "An error occurred while registering the user." },
+      { message: "Errore interno del server." },
       { status: 500 }
     );
   }
