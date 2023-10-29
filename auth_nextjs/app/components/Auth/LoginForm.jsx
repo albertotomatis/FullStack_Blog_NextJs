@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { handleInputChange } from "@/app/components/Auth/Validation";
 import { isValidEmail } from "@/utils/validation";
 import { useSession } from "next-auth/react";
+import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ export default function LoginForm() {
     password: '',
   });
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
   const { data: session } = useSession();
   const router = useRouter();
@@ -27,6 +29,11 @@ export default function LoginForm() {
     clearErrors(); // Pulisci gli errori quando l'utente modifica i dati
     handleInputChange(e, formData, setFormData, errors, setErrors, isValidEmail);
   }
+
+  // show - hide password
+  const togglePasswordVisibility = () => {
+    setPasswordVisible((prev) => !prev);
+  };
 
   // All'invio del form
   const handleSubmit = async (e) => {
@@ -63,9 +70,9 @@ export default function LoginForm() {
           Sign in to your account
         </h2>
       </div>
-
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6" action="#" method="POST">
+          { /* email */ }
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 px-2.5">Email</label>
             <div className="mt-2">
@@ -82,24 +89,30 @@ export default function LoginForm() {
               </p>
             )}
           </div>
-
+          { /* Password */ }
           <div>
             <div className="flex items-center justify-between">
               <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900 px-2.5">Password</label>
-
               <div className="text-sm">
                 <Link href={'/forgotPassword'} className="font-semibold text-[#51A6DB] hover:text-sky-900">
                   Forgot password?
                 </Link>
               </div>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 relative" style={{ height: '2.5rem' }}>
               <input
                 onChange={handleChange}
-                type="password"
+                type={passwordVisible ? 'text' : 'password'}
                 name="password"
                 className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
               />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400"
+              >
+                {passwordVisible ? <HiEye /> : <HiEyeOff />}
+              </button>
             </div>
             {errors.password && (
               <p className="text-red-400 font-bold w-fit text-sm py-1 px-3 rounded-md mt-2">
@@ -107,6 +120,7 @@ export default function LoginForm() {
               </p>
             )}
           </div>
+
 
           <div>
             <button
