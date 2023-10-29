@@ -2,11 +2,13 @@
 import Link from "next/link";
 import { useSession, signOut } from 'next-auth/react';
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const { data: session } = useSession();
   const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
   const toggleAvatarMenu = () => {
     setIsAvatarMenuOpen(!isAvatarMenuOpen);
@@ -17,6 +19,12 @@ export default function Navbar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
     setIsAvatarMenuOpen(false);
   };
+
+  const handleLogout = async () => {
+    console.log('Logout button clicked');
+    await signOut({ callbackUrl: '/' }); // Specifica l'URL di callback personalizzato
+  };
+
 
   return (
     <nav className="bg-zinc-100 fixed w-full z-20 top-4 left-0">
@@ -59,7 +67,8 @@ export default function Navbar() {
                     <Link href="/" className="block px-4 py-2 text-gray-900 hover-bg-gray-100 dark:hover-bg-gray-700 dark:text-white">
                       Settings
                     </Link>
-                    <Link href="/" onClick={() => signOut()} className="block px-4 py-2 text-gray-900 hover-bg-gray-100 dark:hover-bg-gray-700 dark:text-white">
+                    <Link href="/" onClick={handleLogout}
+                      className="block px-4 py-2 text-gray-900 hover-bg-gray-100 dark:hover-bg-gray-700 dark:text-white">
                       Logout
                     </Link>
                   </div>
