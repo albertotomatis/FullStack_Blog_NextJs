@@ -4,38 +4,44 @@ import bcrypt from "bcrypt";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions = ({
+export const authOptions = {
   providers: [
     CredentialsProvider({
       credentials: {},
-        async authorize(credentials) {
-          const { email, password } = credentials;
+      async authorize(credentials) {
+        const { email, password } = credentials;
       
-          try {
-            await connectMongoDB();
-            const user = await User.findOne({ email });
+        try {
+          await connectMongoDB();
+          const user = await User.findOne({ email });
       
-            if (!user) {
-              throw new Error("InvalidCredentials"); // L'utente non esiste
-            }
-      
-            const passwordsMatch = await bcrypt.compare(password, user.password);
-      
-            if (!passwordsMatch) {
-              throw new Error("InvalidCredentials"); // Password non corretta
-            }
-      
-            if (!user.emailVerified) {
-              throw new Error("EmailNotVerified"); // Email non verificata
-            }
-      
-            return user;
-          } catch (error) {
-            console.error("Error: ", error);
-            throw error; // Rilancia l'errore per ottenere un messaggio di errore dettagliato
+          if (!user) {
+            throw new Error("InvalidCredentials"); // L'utente non esiste
           }
-        },
-      }),   
+      
+          const passwordsMatch = await bcrypt.compare(password, user.password);
+      
+          if (!passwordsMatch) {
+            throw new Error("InvalidCredentials"); // Password non corretta
+          }
+      
+          if (!user.emailVerified) {
+            throw new Error("EmailNotVerified"); // Email non verificata
+          }
+ 
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role, 
+            emailVerified: user.emailVerified,
+          };
+        } catch (error) {
+          console.error("Error: ", error);
+          throw error; // Rilancia l'errore per ottenere un messaggio di errore dettagliato
+        }
+      },
+    }),
   ],
   session: {
     strategy: "jwt",
@@ -52,6 +58,8 @@ export const authOptions = ({
         session.user.role = token.role;
         session.user.emailVerified = token.emailVerified;
       }
+    // DEBUG
+    //console.log("Session data:", session);
       return session;
     },
     async jwt({ token, user }) {
@@ -64,7 +72,8 @@ export const authOptions = ({
           token.id = user.id;
           return token;
         }
-
+        // DEBUG
+        //console.log("User data from JWT callback:", dbUser);
         return {
           id: dbUser._id.toString(), // Converte l'ObjectId in una stringa
           name: dbUser.name,
@@ -73,13 +82,13 @@ export const authOptions = ({
           emailVerified: dbUser.emailVerified,
         };
       } catch (error) {
-        console.error("Error: ", error);
+        console.error("Error in JWT callback:", error);
         return null;
       }
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
 const handler = NextAuth(authOptions);
 

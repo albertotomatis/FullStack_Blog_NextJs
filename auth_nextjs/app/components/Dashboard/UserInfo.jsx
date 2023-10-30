@@ -1,5 +1,6 @@
 'use client';
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function UserInfo() {
 
@@ -18,6 +19,7 @@ export default function UserInfo() {
     <div className="sm:mx-auto sm:w-full sm:max-w-sm py-5">
         <div>Role: <span className="font-bold">{session?.user?.role}</span></div>
     </div>
+    <Link href="/creaPost" >Crea post</Link>
   </div>
     )
 }
