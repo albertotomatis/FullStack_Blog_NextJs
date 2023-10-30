@@ -124,35 +124,33 @@ export default function RegisterForm() {
               )}
             </div>
           </div>
-
-{/* Password */}
-<div>
-  <label htmlFor="password" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-    Password
-  </label>
-  <div className="mt-2 relative" style={{ height: '2.5rem' }}>
-    <input
-      onChange={handleChange}
-      name="password"
-      type={passwordVisible ? 'text' : 'password'}
-      autoComplete="current-password"
-      className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
-    />
-    <button
-      type="button"
-      onClick={togglePasswordVisibility}
-      className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400"
-    >
-      {passwordVisible ? <HiEye /> : <HiEyeOff />}
-    </button>
-    </div>
-    {errors.password && (
-      <p className="text-red-400 font-bold w-fit text-sm py-1 px-3 rounded-md mt-2">
-        {errors.password}
-      </p>
-    )}
-</div>
-
+        {/* Password */}
+        <div>
+          <label htmlFor="password" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+            Password
+          </label>
+          <div className="mt-2 relative" style={{ height: '2.5rem' }}>
+            <input
+              onChange={handleChange}
+              name="password"
+              type={passwordVisible ? 'text' : 'password'}
+              autoComplete="current-password"
+              className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400"
+            >
+              {passwordVisible ? <HiEye /> : <HiEyeOff />}
+            </button>
+            </div>
+            {errors.password && (
+              <p className="text-red-400 font-bold w-fit text-sm py-1 px-3 rounded-md mt-2">
+                {errors.password}
+              </p>
+            )}
+        </div>
           {/* Role */}
           {isAdmin && (
             <div>
