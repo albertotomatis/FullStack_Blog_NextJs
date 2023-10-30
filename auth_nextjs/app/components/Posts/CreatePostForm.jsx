@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify"; // Assicurati di importare React Toastify
 
 export default function CreatePostForm() {
   const { data: session } = useSession();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [errors, setErrors] = useState({});
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
-  const handleCreatePost = async () => {
-    if (!session || session.user.role !== "admin") {
-      alert("Accesso negato. Solo gli utenti con ruolo 'admin' possono creare post.");
+  const handleCreatePost = async (e) => {
+    e.preventDefault();
+    if (title.trim() === "" || content.trim() === "") {
+      setErrors({ message: "titolo e contenuto sono obbligatori" });
       return;
     }
-
     try {
-      const response = await fetch("/api/createPost", {
+      const res = await fetch("/api/createPost", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,19 +28,23 @@ export default function CreatePostForm() {
         }),
       });
 
-      if (response.status === 201) {
-        await response.json();
-        console.log("Nuovo post creato:");
-        // Pulisci i campi dopo la creazione del post
-        setTitle("");
-        setContent("");
+      if (res.ok) {
+        const form = e.target;
+        form.reset();
+        setShowSuccessToast(true); // Mostra la notifica di successo
       } else {
-        console.error("Errore nella creazione del post.");
+        console.log('Creazione post fallita.');
       }
     } catch (error) {
-      console.error("Errore nella creazione del post:", error);
+      console.log('Errore durante la creazione del post:', error);
     }
   };
+
+  useEffect(() => {
+    if (showSuccessToast) {
+      toast.success('Post creato!');
+    }
+  }, [showSuccessToast]);
 
   return (
     <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
@@ -85,7 +92,13 @@ export default function CreatePostForm() {
             }}>
             Crea Post
           </button>
+          {errors.message && (
+          <div className="bg-red-400 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
+            {errors.message}
+          </div>
+        )}
         </form>
+        
       </div>
     </div>
   );
