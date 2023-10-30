@@ -32,7 +32,7 @@ export async function POST(req) {
     // Verifica se l'utente ha il ruolo "admin"
     if (session.user.role !== "admin") {
         return NextResponse.json(
-          { message: "Accesso negato. Solo gli utenti con ruolo 'admin' possono creare post." },
+          { message: "Non sei autorizzato a creare post." },
           { status: 403 }
         );
     }

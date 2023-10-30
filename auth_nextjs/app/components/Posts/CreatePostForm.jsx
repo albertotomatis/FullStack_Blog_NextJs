@@ -1,6 +1,7 @@
+'use client';
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { toast } from "react-toastify"; // Assicurati di importare React Toastify
+import { toast } from "react-toastify"; 
 
 export default function CreatePostForm() {
   const { data: session } = useSession();
@@ -9,6 +10,11 @@ export default function CreatePostForm() {
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
+   // cancella gli errori
+   const clearErrors = () => {
+    setErrors({});
+  }
+  // all'invio del form per crea post
   const handleCreatePost = async (e) => {
     e.preventDefault();
     if (title.trim() === "" || content.trim() === "") {
@@ -29,9 +35,10 @@ export default function CreatePostForm() {
       });
 
       if (res.ok) {
-        const form = e.target;
-        form.reset();
-        setShowSuccessToast(true); // Mostra la notifica di successo
+        setTitle("");
+        setContent("");
+        clearErrors();
+        setShowSuccessToast(true);
       } else {
         console.log('Creazione post fallita.');
       }
@@ -98,7 +105,6 @@ export default function CreatePostForm() {
           </div>
         )}
         </form>
-        
       </div>
     </div>
   );
