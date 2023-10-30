@@ -17,10 +17,6 @@ export async function POST(req) {
 
     // Verifica se l'utente ha una sessione valida
     const session = await getServerSession(authOptions);
-    /* INIZIO DEBUG */ 
-    //console.log(session);
-    //console.log("roleSession: " + session.user.role)
-    /* FINE DEBUG */ 
 
     if (!session) {
       return NextResponse.json(
@@ -29,17 +25,27 @@ export async function POST(req) {
       );
     }
 
+    // Verifica se un post con lo stesso titolo esiste già
+    const existingPost = await Post.findOne({ title });
+
+    if (existingPost) {
+      return NextResponse.json(
+        { message: "Un post con lo stesso titolo esiste già nel database." },
+        { status: 409 } // 409 Conflict HTTP status code
+      );
+    }
+
     // Verifica se l'utente ha il ruolo "admin"
     if (session.user.role !== "admin") {
-        return NextResponse.json(
-          { message: "Non sei autorizzato a creare post." },
-          { status: 403 }
-        );
+      return NextResponse.json(
+        { message: "Accesso negato. Solo gli utenti con ruolo 'admin' possono creare post." },
+        { status: 403 }
+      );
     }
 
     await connectMongoDB();
     await Post.create({ title, content, author });
-    return NextResponse.json({message: "Post creato."}, { status: 201 });
+    return NextResponse.json({ message: "Post creato." }, { status: 201 });
   } catch (error) {
     console.error("Errore nella creazione del post:", error);
     return NextResponse.json(
