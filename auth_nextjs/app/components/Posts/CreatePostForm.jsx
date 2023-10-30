@@ -34,14 +34,17 @@ export default function CreatePostForm() {
         }),
       });
 
-      if (res.ok) {
-        setTitle("");
-        setContent("");
-        clearErrors();
-        setShowSuccessToast(true);
-      } else {
-        console.log('Creazione post fallita.');
-      }
+      if (res.status === 409) {
+        // Il titolo è duplicato, mostra un errore
+        setErrors({ message: "Un post con lo stesso titolo esiste già nel database" });
+        } else if (res.ok) {
+          setTitle("");
+          setContent("");
+          clearErrors();
+          setShowSuccessToast(true);
+        } else {
+          console.log('Creazione post fallita.');
+        }
     } catch (error) {
       console.log('Errore durante la creazione del post:', error);
     }
