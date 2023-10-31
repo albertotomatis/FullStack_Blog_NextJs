@@ -27,10 +27,10 @@ export default function Navbar() {
 
 
   return (
-    <nav className="bg-zinc-100 fixed w-full z-20 top-4 left-0">
+    <nav className="fixed w-full z-20 top-0 left-0 bg-[#fdfdfd] ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
         <Link href={'/'}>
-        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-slate-700">
+        <span className="self-center text-2xl font-semibold whitespace-nowrap text-[#020202]">
           Developer
         </span>
         </Link>
@@ -60,7 +60,6 @@ export default function Navbar() {
                     <div className="px-4 py-2">
                       <span className="block text-bold text-gray-900 dark:text-white">Hello, {session?.user?.name}</span>
                     </div>
-                    <hr className="border-t border-sky-200 my-2" />
                     <Link href="/" className="block px-4 py-2 text-gray-900 hover-bg-gray-100 dark:hover-bg-gray-700 dark:text-white">
                       Dashboard
                     </Link>

@@ -45,12 +45,14 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-[#51A6DB]">Forgot password?</h2>
-      </div>
-
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="flex h-screen items-center justify-center w-full">
+      <div className="bg-[#fdfdfd] rounded-lg shadow dark:border md:mt-0 sm:max-w-md md:px-8 md:py-8 xl:px-8 xl:py-8  ombra-bordo">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+          <h2 className="mt-5 text-center text-3xl font-bold px-4 sm:px-8 md:px-8">
+            Forgot Password?
+          </h2>
+        </div>
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm p-4 sm:p-6 md:p-8"></div>
         <form onSubmit={handleSubmit} className="space-y-6" action="#" method="POST">
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 px-2.5">Email</label>
@@ -69,7 +71,7 @@ export default function ForgotPassword() {
             </div>
           </div>
           <div>
-            <button type="submit" className="flex w-full justify-center rounded-md bg-[#ffbc5f] px-3 py-1.5 text-sm font-semibold leading-6 text-slate-900 hover:bg-[#51A6DB]"
+            <button type="submit" className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900"
             style={{
               borderBottom: '4px solid #020202',
               borderLeft: '4px solid #020202',

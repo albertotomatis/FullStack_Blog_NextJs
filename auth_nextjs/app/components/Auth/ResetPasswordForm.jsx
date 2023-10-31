@@ -65,7 +65,8 @@ export function ResetPasswordForm() {
   };
 
   return (
-    <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex h-screen items-center justify-center w-full">
+      <div className="bg-[#fdfdfd] rounded-lg shadow dark:border md:mt-0 sm:max-w-md md:px-8 md:py-8 xl:px-8 xl:py-8  ombra-bordo">
       {tokenExpired ? (
         <div className="text-center">
           <p>Il link per il reset della password è scaduto.</p>
@@ -97,13 +98,7 @@ export function ResetPasswordForm() {
                 </div>
               </div>
               <div>
-                <button type="submit" className="flex w-full justify-center rounded-md bg-[#ffbc5f] px-3 py-1.5 text-sm font-semibold leading-6 text-slate-900 hover:bg-[#51A6DB]"
-                style={{
-                  borderBottom: '4px solid #020202',
-                  borderLeft: '4px solid #020202',
-                  borderTop: '1px solid #020202',
-                  borderRight: '1px solid #020202',
-                }}>
+                <button type="submit" className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900">
                   Invia
                 </button>
               </div>
@@ -111,6 +106,7 @@ export function ResetPasswordForm() {
           </div>
         </>
       )}
+    </div>
     </div>
   );
 }

@@ -64,13 +64,14 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-        <h2 className="mt-5 text-center text-3xl font-bold">
-          Sign in to your account
-        </h2>
-      </div>
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="flex h-screen items-center justify-center w-full">
+      <div className="bg-[#fdfdfd] rounded-lg shadow dark:border md:mt-0 sm:max-w-md md:px-8 md:py-8 xl:px-8 xl:py-8  ombra-bordo">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
+          <h2 className="mt-5 text-center text-3xl font-bold px-4 sm:px-8 md:px-8">
+            Sign in to your account
+          </h2>
+        </div>
+        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm p-4 sm:p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-6" action="#" method="POST">
           { /* email */ }
           <div>
@@ -104,7 +105,7 @@ export default function LoginForm() {
                 onChange={handleChange}
                 type={passwordVisible ? 'text' : 'password'}
                 name="password"
-                className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300  focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
               />
               <button
                 type="button"
@@ -120,8 +121,6 @@ export default function LoginForm() {
               </p>
             )}
           </div>
-
-
           <div>
             <button
               type="submit"
@@ -154,6 +153,7 @@ export default function LoginForm() {
           </Link>
         </p>
       </div>
+    </div>
     </div>
   );
 }
