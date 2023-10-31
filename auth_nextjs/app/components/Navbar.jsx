@@ -41,7 +41,7 @@ export default function Navbar() {
                 className="px-4 py-2 text-center mr-3 focus:outline-none"
                 onClick={toggleAvatarMenu}
               >
-                <div className="relative w-10 h-10 overflow-hidden bg-[#17e5b5] rounded-full dark:bg-[#17e5b5]">
+                <div className="relative w-10 h-10 overflow-hidden bg-[#d2ebb8] rounded-full">
                   <svg className="absolute w-12 h-12 text-gray-800 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path>
                   </svg>
@@ -49,25 +49,19 @@ export default function Navbar() {
 
               </button>
               {isAvatarMenuOpen && (
-                <div className="absolute z-10 mt-2 pb-3 pt-2 w-56 rounded-md shadow-lg bg-[#258ED9] text-zinc-50 right-0 left-auto"
-                style={{
-                  borderBottom: '4px solid black',
-                  borderLeft: '4px solid black',
-                  borderTop: '2px solid black',
-                  borderRight: '2px solid black',
-                }}>
+                <div className="btn absolute z-10 mt-2 pb-3 pt-2 w-56 rounded-lg  right-0 left-auto">
                   <div className="grid grid-cols-1">
                     <div className="px-4 py-2">
-                      <span className="block text-bold text-gray-900 dark:text-white">Hello, {session?.user?.name}</span>
+                      <span className="block text-bold">Hello, {session?.user?.name}</span>
                     </div>
-                    <Link href="/" className="block px-4 py-2 text-gray-900 hover-bg-gray-100 dark:hover-bg-gray-700 dark:text-white">
+                    <Link href="/" className="block px-4 py-2">
                       Dashboard
                     </Link>
-                    <Link href="/" className="block px-4 py-2 text-gray-900 hover-bg-gray-100 dark:hover-bg-gray-700 dark:text-white">
+                    <Link href="/" className="block px-4 py-2">
                       Settings
                     </Link>
                     <Link href="/" onClick={handleLogout}
-                      className="block px-4 py-2 text-gray-900 hover-bg-gray-100 dark:hover-bg-gray-700 dark:text-white">
+                      className="block px-4 py-2 text-gray-900">
                       Logout
                     </Link>
                   </div>
