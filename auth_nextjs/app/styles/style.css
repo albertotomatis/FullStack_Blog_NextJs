@@ -1,0 +1,25 @@
+:root {
+    --orange: #ffbc5f;
+    --blue-light: #51A6DB;
+    --dark: #020202;
+}
+
+.btn {
+    background-color: var(--orange);
+    border-bottom: 5px solid var(--dark);;
+    border-left: 2px solid var(--dark);;
+    border-top: 2px solid var(--dark);;
+    border-right: 5px solid var(--dark);;
+}
+
+.btn:hover {
+    background-color: var(--blue-light);
+}
+
+h1 {
+    color: var(--blue-dark);
+}
+
+h2 {
+    color: var(--blue-light);
+}

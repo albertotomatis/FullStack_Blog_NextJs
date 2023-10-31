@@ -66,7 +66,7 @@ export default function LoginForm() {
   return (
     <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-        <h2 className="mt-5 text-center text-3xl font-bold leading-9 tracking-tighter text-[#51A6DB]">
+        <h2 className="mt-5 text-center text-3xl font-bold">
           Sign in to your account
         </h2>
       </div>
@@ -109,7 +109,7 @@ export default function LoginForm() {
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-700"
               >
                 {passwordVisible ? <HiEye /> : <HiEyeOff />}
               </button>
@@ -125,14 +125,7 @@ export default function LoginForm() {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-[#ffbc5f] px-3 py-1.5 text-sm font-semibold leading-6 text-slate-900 hover:bg-[#51A6DB]"
-              style={{
-                borderBottom: '4px solid #020202',
-                borderLeft: '4px solid #020202',
-                borderTop: '1px solid #020202',
-                borderRight: '1px solid #020202',
-              }}
-            >
+              className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900">
               Login
             </button>
           </div>

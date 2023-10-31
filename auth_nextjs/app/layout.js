@@ -1,11 +1,12 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import './globals.css';
+import './styles/style.css';
+import { Open_Sans } from 'next/font/google'
 import Navbar from './components/Navbar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './Providers';
 
-const inter = Inter({ subsets: ['latin'] })
+const OpenSans = Open_Sans({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Next Auth',
@@ -15,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="it">
-      <body className={inter.className}>
+      <body className={OpenSans.className}>
       <AuthProvider>
        <Navbar />
        <ToastContainer position="top-center" autoClose={3000} />

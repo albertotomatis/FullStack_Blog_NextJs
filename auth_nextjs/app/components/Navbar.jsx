@@ -77,13 +77,7 @@ export default function Navbar() {
             </div>
           ) : (
             <Link href={'/login'}>
-             <button type="button" className="bg-[#feb32c] hover:bg-[#51A6DB] font-semibold rounded-lg text-sm px-4 py-2 text-center mr-5"
-              style={{
-                borderBottom: '4px solid #020202',
-                borderLeft: '4px solid #020202',
-                borderTop: '1px solid #020202',
-                borderRight: '1px solid #020202',
-              }}>
+             <button type="button" className="btn font-semibold rounded-lg text-sm px-4 py-2 text-center mr-5">
               Login
             </button>
 
