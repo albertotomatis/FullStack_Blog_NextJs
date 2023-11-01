@@ -1,7 +1,7 @@
-#  Autenticazione con Next.js, MongoDb, NextAuth, React, Tailwind.
+#  Blog con Next.js, MongoDb, NextAuth, React, Tailwind.
 
 # Principali funzionalità
-### Register, Login, Password dimenticata, Pagine protette.
+### Register, Email verification, Login, Password dimenticata, Crud.
 
 # Installazione
 
