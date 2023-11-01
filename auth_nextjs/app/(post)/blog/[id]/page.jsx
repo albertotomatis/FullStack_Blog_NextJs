@@ -15,7 +15,6 @@ const getPostById = async (id) => {
 export default async function SinglePost({ params }) {
   const { id } = params;
   const { post } = await getPostById(id);
-  //const { title, description } = post;
 
   return (
     <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
@@ -26,4 +25,3 @@ export default async function SinglePost({ params }) {
     </div>
   );
 }
-

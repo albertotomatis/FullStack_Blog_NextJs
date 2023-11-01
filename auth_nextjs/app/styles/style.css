@@ -7,7 +7,7 @@
 }
 
 body {
-    background: #96d7b3;
+    background: /*#96d7b3;*/ var(--white)
 }
 
 nav {

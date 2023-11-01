@@ -9,9 +9,5 @@ export async function GET(req) {
   if(!post) {
     return NextResponse.json({ message: "Error" }, {status: 404});
   }
-  /* INIZIO DEBUG */
-  //console.log(post);
-  /* FINE DEBUG */
-  return NextResponse.json({ message: "Ok", post }, {status: 200});
-  
+  return NextResponse.json({ message: "Success", post}, {status: 200}); 
 }

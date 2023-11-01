@@ -17,10 +17,14 @@ const getPosts = async () => {
 export default async function PostList() {
   const { posts } = await getPosts();
   return (
-    <>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8 pt-16">
+          <h2 class="mb-4 text-center text-3xl font-bold">
+            Blog
+          </h2>
+      </div> 
       {posts.map((post) => (
-        <div
-          key={post._id}
+        <div key={post._id}
           className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start">
           <div>
             <h1 className="font-bold text-2xl">
@@ -31,6 +35,6 @@ export default async function PostList() {
           </div>
         </div>
       ))}
-    </>
+      </div>
   );
 }
