@@ -46,7 +46,6 @@ export default function Navbar() {
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path>
                   </svg>
                 </div>
-
               </button>
               {isAvatarMenuOpen && (
                 <div className="btn absolute z-10 mt-2 pb-3 pt-2 w-56 rounded-lg  right-0 left-auto">
@@ -106,8 +105,8 @@ export default function Navbar() {
               </li>
             ) : (
               <li>
-                <Link href="/" className="block py-2 pl-3 pr-4 rounded hover-bg-gray-100 md:hover-bg-transparent md:hover-text-blue-700 md:p-0 md:dark:hover-text-blue-500 text-slate-900 dark:hover-bg-gray-700 dark:hover-text-white md:dark:hover-bg-transparent dark.border-gray-700">
-                  Link
+                <Link href="/blog" className="block py-2 pl-3 pr-4 rounded hover-bg-gray-100 md:hover-bg-transparent md:hover-text-blue-700 md:p-0 md:dark:hover-text-blue-500 text-slate-900 dark:hover-bg-gray-700 dark:hover-text-white md:dark:hover-bg-transparent dark.border-gray-700">
+                  Blog
                 </Link>
               </li>
             )}

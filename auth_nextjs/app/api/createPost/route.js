@@ -7,14 +7,12 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export async function POST(req) {
   try {
     const { title, content, author } = await req.json();
-
     if (!title || !content || !author) {
       return NextResponse.json(
-        { message: "Assicurati di fornire tutti i campi richiesti: title, content e author." },
+        { message: "Assicurati di fornire tutti i campi richiesti" },
         { status: 400 }
       );
     }
-
     // Verifica se l'utente ha una sessione valida
     const session = await getServerSession(authOptions);
 
@@ -24,7 +22,6 @@ export async function POST(req) {
         { status: 401 } 
       );
     }
-
     // Verifica se un post con lo stesso titolo esiste già
     const existingPost = await Post.findOne({ title });
 
