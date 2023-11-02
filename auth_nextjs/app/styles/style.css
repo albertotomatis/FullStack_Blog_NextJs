@@ -1,44 +1,57 @@
 :root {
-    --green:  #d2ebb8;
-    --light-blue: #156cb2;
-    --dark: #020202;
-    --white: #f9f9f9;
-    --blue: #51A6DB;
+    --primary-bg: #F2F5F5;  /* Sfondo principale (grigio chiaro) */
+    --primary-fg: #333333;  /* Testo principale */
+    --accent-color: #009688;  /* Colore di evidenza (verde acqua) */
+    --button-bg: #4285f4;  /* Sfondo dei pulsanti */
+    --button-fg: #ffffff;  /* Testo dei pulsanti */
+    --link-color: #009688;  /* Colore dei link */
+    --border-color: #cccccc;  /* Colore dei bordi */
 }
 
+/* Rimuovi il colore di sfondo dal body, usa --primary-bg al suo posto */
 body {
-    background: /*#96d7b3;*/ var(--white)
+    background: var(--primary-bg);
+    font-family: Arial, sans-serif;  /* Aggiunto un tipo di carattere predefinito */
 }
 
-nav {
-    border-bottom: 3px solid var(--dark);
-    border-style: dashed;
-}
-
+/* Aggiungi ombra al bordo con il colore di sfondo */
 .ombra-bordo {
-    border-bottom: 2px solid var(--dark);
-    border-left: 2px solid var(--dark);
-    border-top: 2px solid var(--dark);
-    border-right: 2px solid var(--dark);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Modifica i pulsanti con sfondo e testo personalizzati */
 .btn {
-    background-color: var(--green);
-    border-bottom: 5px solid var(--dark);
-    border-left: 2px solid var(--dark);
-    border-top: 2px solid var(--dark);
-    border-right: 5px solid var(--dark);
-    color: var(--dark);
+    background-color: var(--button-bg);
+    color: var(--button-fg);
+    border: none;  /* Rimuovo i bordi dai pulsanti */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    padding: 10px 20px;  /* Aggiunto spazio interno ai pulsanti */
+    cursor: pointer;  /* Cambio il cursore al passaggio del mouse */
 }
 
 .btn:hover {
-    background-color: #71befe;
+    background-color: #3b7adf;  /* Cambiato il colore al passaggio del mouse */
 }
 
+/* Aggiorna i colori per i titoli e i link */
 h2 {
-    color: var(--blue);
+    color: var(--accent-color);
+}
+
+p {
+    color: var(--primary-fg);
 }
 
 a {
-    color: var(--light-blue);
+    color: var(--link-color);
+    text-decoration: none;  /* Rimuovo il sottolineato dai link */
+    transition: color 0.3s ease;  /* Aggiunta transizione al colore dei link */
 }
+
+a:hover {
+    color: #007d66;  /* Cambiato il colore dei link al passaggio del mouse */
+}
+
+
