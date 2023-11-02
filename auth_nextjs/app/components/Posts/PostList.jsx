@@ -40,7 +40,7 @@ export default async function PostList() {
           <span class="text-sm">14 days ago</span>
         </div>
         <h2 class="mb-2 text-3xl font-bold">
-          <Link href={`/blog/${post._id}`} >{post.title}</Link>
+          <Link href={`/blog/${post.slug}`} >{post.title}</Link>
         </h2>
         <p class="mb-5 ">
           {post.content}
@@ -49,7 +49,7 @@ export default async function PostList() {
           <div class="flex items-center space-x-4">
             <span class="font-medium">Jese Leos</span>
           </div>
-          <Link href={`/blog/${post._id}`} class="inline-flex items-center font-medium hover:underline">
+          <Link href={`/blog/${post.slug}`} class="inline-flex items-center font-medium hover:underline">
             Leggi di più
             <svg class="ml-2 w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>

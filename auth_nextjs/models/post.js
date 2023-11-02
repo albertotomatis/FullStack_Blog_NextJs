@@ -15,6 +15,10 @@ const postSchema = new Schema(
       ref: "User", // Riferimento al modello degli utenti
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

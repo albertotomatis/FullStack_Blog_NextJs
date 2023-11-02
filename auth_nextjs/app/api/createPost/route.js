@@ -4,9 +4,24 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+// genera uno slug dal titolo
+const createSlug = (title) => {
+  const slug = title
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Sostituisci spazi con trattini
+    .replace(/[^a-z0-9-]/g, '') // Rimuovi caratteri non validi
+    .replace(/-+$/, '') // Rimuovi eventuali trattini finali
+    .substring(0, 100); // Limita la lunghezza del `slug` se necessario
+  console.log("Slug generato:", slug); // Stampa il slug generato
+  return slug;
+};
+
 export async function POST(req) {
   try {
     const { title, content, author } = await req.json();
+    // Genera il valore di slug dal titolo
+    const slug = createSlug(title);
+
     if (!title || !content || !author) {
       return NextResponse.json(
         { message: "Assicurati di fornire tutti i campi richiesti" },
@@ -15,7 +30,6 @@ export async function POST(req) {
     }
     // Verifica se l'utente ha una sessione valida
     const session = await getServerSession(authOptions);
-
     if (!session) {
       return NextResponse.json(
         { message: "Utente non autenticato." },
@@ -41,7 +55,7 @@ export async function POST(req) {
     }
 
     await connectMongoDB();
-    await Post.create({ title, content, author });
+    await Post.create({ title, content, author, slug });
     return NextResponse.json({ message: "Post creato." }, { status: 201 });
   } catch (error) {
     console.error("Errore nella creazione del post:", error);
