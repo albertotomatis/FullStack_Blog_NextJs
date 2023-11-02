@@ -3,11 +3,21 @@ import Post from "@/models/post";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
-  const id = req.url.split("listaPost/")[1];
-  await connectMongoDB();
-  const post = await Post.findOne({_id: id});
-  if(!post) {
-    return NextResponse.json({ message: "Error" }, {status: 404});
+  // Estrai i parametri dalla URL utilizzando un'espressione regolare
+  const match = req.url.match(/listaPost\/(\w+)/);
+
+  if (!match) {
+    return NextResponse.json({ message: "Error" }, { status: 404 });
   }
-  return NextResponse.json({ message: "Success", post}, {status: 200}); 
+
+  const id = match[1]; // Estrai l'ID dall'espressione regolare
+
+  await connectMongoDB();
+  const post = await Post.findOne({ _id: id });
+  if (!post) {
+    return NextResponse.json({ message: "Error" }, { status: 404 });
+  }
+
+  return NextResponse.json({ message: "Success", post }, { status: 200 });
 }
+
