@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BiEdit } from "react-icons/bi";
 
 const getPosts = async () => {
   try {
@@ -56,6 +57,9 @@ export default async function PostList() {
             </svg>
           </Link>
         </div>
+        <Link href={`/editPost/${post._id}`} class="text-[#4285f4] inline-flex items-center font-medium hover:underline pt-5">
+        <BiEdit size={24} /> 
+          </Link>
       </article> 
     ))}
   </div>  
