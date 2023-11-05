@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { BiEdit } from "react-icons/bi";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const getPosts = async () => {
   try {
@@ -17,6 +19,7 @@ const getPosts = async () => {
 
 export default async function PostList() {
   const { posts } = await getPosts();
+  const session = await getServerSession(authOptions);
   return (
 <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
   <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8 pt-16">
@@ -57,9 +60,14 @@ export default async function PostList() {
             </svg>
           </Link>
         </div>
+        {session ? (
+        (session.user.role === "admin" ||
+          (session.user.role === "author" && session.user.id === id)) ? (
         <Link href={`/editPost/${post._id}`} class="text-[#4285f4] inline-flex items-center font-medium hover:underline pt-5">
         <BiEdit size={24} /> 
           </Link>
+          ) : null
+          ) : null}
       </article> 
     ))}
   </div>  

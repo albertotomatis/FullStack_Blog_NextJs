@@ -2,19 +2,21 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify"; 
+import { useSession } from "next-auth/react";
 
 export default function EditPostForm({ id, title, content }) {
   const [newTitle, setNewTitle] = useState(title);
   const [newContent, setNewContent] = useState(content);
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
-
+  
   // Cancellazione degli errori quando si inizia a modificare il modulo
   const clearErrors = () => {
     setErrors({});
   };
 
   const router = useRouter();
+  const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,6 +61,9 @@ export default function EditPostForm({ id, title, content }) {
 
   return (
     <div className="flex h-screen items-center justify-center w-full">
+      {session ? (
+        (session.user.role === "admin" ||
+          (session.user.role === "author" && session.user.id === id)) ? (
       <div className="bg-[#fdfdfd] rounded-lg shadow dark:border md:mt-0 sm:max-w-md md:px-8 md:py-8 xl:px-8 xl:py-8 ombra-bordo">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
           <h2 className="mt-5 text-center text-3xl font-bold px-4 sm:px-8 md:px-8">
@@ -102,9 +107,21 @@ export default function EditPostForm({ id, title, content }) {
                 {errors.message}
               </div>
             )}
-          </form>
+          </form>   
         </div>
       </div>
+       ) : (
+        // l'utente è loggato ma non ha le autorizzazioni necessarie
+        <p class=" text-2xl font-medium">
+          Non hai le autorizzazioni necessarie per modificare questo post.
+        </p>
+      )
+    ) : (
+      // Utente non autenticato
+        <p class=" text-2xl font-medium">
+          Effettua il login per per modificare questo post.
+        </p>
+    )}
     </div>
   );
 }
