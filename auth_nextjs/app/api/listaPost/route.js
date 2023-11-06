@@ -26,8 +26,8 @@ export async function DELETE(request) {
 
     await connectMongoDB();
 
-    // Esegui una query per recuperare il post dal database
-    const post = await Post.findOne({ _id: id });
+    // Ordina i post in base alla data di creazione in ordine decrescente
+    const post = await Post.find().sort({ createdAt: -1 });
 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
