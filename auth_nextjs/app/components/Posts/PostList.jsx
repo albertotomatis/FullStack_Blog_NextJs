@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BiEdit } from "react-icons/bi";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import RemoveBtn from "@/app/components/Posts/RemoveBtn";
 
 const getPosts = async () => {
   try {
@@ -60,14 +61,17 @@ export default async function PostList() {
             </svg>
           </Link>
         </div>
-        {session ? (
-        (session.user.role === "admin" ||
-          (session.user.role === "author" && session.user.id === id)) ? (
-        <Link href={`/editPost/${post._id}`} class="text-[#4285f4] inline-flex items-center font-medium hover:underline pt-5">
-        <BiEdit size={24} /> 
-          </Link>
-          ) : null
-          ) : null}
+        <div className="flex gap-3">
+              {session ? (
+                session.user.role === "admin" ||
+                (session.user.role === "author" && session.user.id === post.id) ? (
+                  <Link href={`/editPost/${post._id}`} className="text-[#4285f4] font-medium hover:underline pt-5">
+                    <BiEdit size={24} />
+                  </Link>
+                ) : null
+              ) : null}
+              <RemoveBtn id={post._id} />
+        </div>
       </article> 
     ))}
   </div>  
