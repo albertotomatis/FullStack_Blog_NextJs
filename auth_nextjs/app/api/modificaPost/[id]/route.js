@@ -3,6 +3,7 @@ import Post from "@/models/post";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import createSlug from "@/utils/slug"
 
 export async function GET(request, { params }) {
   const { id } = params;
@@ -18,17 +19,6 @@ export async function GET(request, { params }) {
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
 }
-
-// genera uno slug dal titolo
-const createSlug = (title) => {
-  const slug = title
-    .toLowerCase()
-    .replace(/\s+/g, '-') // Sostituisci spazi con trattini
-    .replace(/[^a-z0-9-]/g, '') // Rimuovi caratteri non validi
-    .replace(/-+$/, '') // Rimuovi eventuali trattini finali
-    .substring(0, 100); // Limita la lunghezza del `slug` se necessario
-  return slug;
-};
 
 export async function PUT(request, { params }) {
   const { id } = params;
