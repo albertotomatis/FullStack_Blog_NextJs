@@ -30,7 +30,7 @@ export default function Navbar() {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
         <Link href={'/'}>
         <span className="self-center text-2xl font-semibold whitespace-nowrap text-[#020202]">
-          CodeLab
+        {"{ CodeLab }"}
         </span>
         </Link>
         <div className="flex md:order-2">

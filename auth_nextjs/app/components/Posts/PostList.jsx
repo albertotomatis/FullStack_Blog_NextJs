@@ -42,7 +42,7 @@ export default async function PostList() {
           Debitis porro non rem repellat aspernatur molestiae.
         </p>
       {/* Elenco delle categorie */}
-        <h3 className="mb-4 text-2xl lg:text-2xl font-semibold mt-12">Categorie:</h3>
+        <h3 className="mb-4 text-2xl lg:text-2xl font-semibold mt-12">{"{ Categorie }"}</h3>
         <ul className="flex space-x-5 font-light ">
           {uniqueCategories.map((category) => (
             <li key={category}>
