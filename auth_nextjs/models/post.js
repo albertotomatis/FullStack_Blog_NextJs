@@ -19,6 +19,11 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      enum: ["next.js", "mongoDB", "react", "tailwind"], 
+      required: true,
+    },
   },
   { timestamps: true }
 );

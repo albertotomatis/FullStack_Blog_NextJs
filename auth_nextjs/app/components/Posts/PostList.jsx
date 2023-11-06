@@ -27,6 +27,10 @@ const formatItalianDate = (date) => {
 export default async function PostList() {
   const { posts } = await getPosts();
   const session = await getServerSession(authOptions);
+
+  // Estrai tutte le categorie univoche dai post
+  const uniqueCategories = [...new Set(posts.map((post) => post.category))];
+
   return (
     <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8 pt-16">
@@ -37,7 +41,21 @@ export default async function PostList() {
         <p className="font-light text-xl sm:text-2xl">
           Debitis porro non rem repellat aspernatur molestiae.
         </p>
+      {/* Elenco delle categorie */}
+        <h3 className="mb-4 text-2xl lg:text-2xl font-semibold mt-12">Categorie:</h3>
+        <ul className="flex space-x-5 font-light ">
+          {uniqueCategories.map((category) => (
+            <li key={category}>
+              <Link href={`/blog?category=${category}`} 
+              className="bg-[#F5E9C4] text-[#333333] text-md lg:text-md font-semibold inline-flex items-center px-3.5 py-1.5 rounded">
+                {category}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
+ 
+      {/* Posts */}
       <div className="grid gap-8 lg:grid-cols-2">
         {posts.map((post) => (
           <article key={post._id} className="p-6 bg-white rounded-lg border border-[#e0e0e0]">
@@ -46,11 +64,12 @@ export default async function PostList() {
                 <svg className="mr-1 w-4 h-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                   <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
                 </svg>
-                Tutorial
+                {post.category}
               </span>
               {/* data */}
               <span className="text-sm">{formatItalianDate(post.createdAt)}</span>
             </div>
+            {/* title */}
             <h2 className="mb-2 text-3xl font-bold">
               <Link href={`/blog/${post.slug}`}>{post.title}</Link>
             </h2>

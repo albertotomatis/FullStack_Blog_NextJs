@@ -7,6 +7,7 @@ export default function CreatePostForm() {
   const { data: session } = useSession();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [category, setCategory] = useState("next.js");
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
@@ -14,6 +15,7 @@ export default function CreatePostForm() {
    const clearErrors = () => {
     setErrors({});
   }
+
   // all'invio del form per crea post
   const handleCreatePost = async (e) => {
     e.preventDefault();
@@ -30,7 +32,8 @@ export default function CreatePostForm() {
         body: JSON.stringify({
           title,
           content,
-          author: session.user.id, // Includi l'ID dell'autore dalla sessione
+          author: session.user.id,
+          category, // Includi l'ID dell'autore dalla sessione
         }),
       });
 
@@ -82,7 +85,7 @@ export default function CreatePostForm() {
           </div>
           {/* Contenuto */}
           <div>
-            <label  className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+            <label className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
               Contenuto
             </label>
             <div className="mt-2">
@@ -91,6 +94,25 @@ export default function CreatePostForm() {
                 onChange={(e) => setContent(e.target.value)}
                 className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
               />
+            </div>
+
+            {/* Categoria */}
+            <div className="mt-6">
+              <label htmlFor="category" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+                Categoria
+              </label>
+              <div className="mt-2">
+                <select
+                  id="category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6">
+                  <option value="next.js">Next.js</option>
+                  <option value="mongoDB">MongoDB</option>
+                  <option value="react">React</option>
+                  <option value="tailwind">Tailwind</option>
+                </select>
+              </div>
             </div>
           </div>
           <button
