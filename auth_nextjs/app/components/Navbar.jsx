@@ -25,13 +25,12 @@ export default function Navbar() {
     await signOut({ callbackUrl: '/' }); // Specifica l'URL di callback personalizzato
   };
 
-
   return (
     <nav className="fixed w-full z-20 top-0 left-0 bg-[#fdfdfd] ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
         <Link href={'/'}>
         <span className="self-center text-2xl font-semibold whitespace-nowrap text-[#020202]">
-          Developer
+          CodeLab
         </span>
         </Link>
         <div className="flex md:order-2">

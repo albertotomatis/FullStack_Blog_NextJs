@@ -8,34 +8,29 @@
     --border-color: #cccccc;  /* Colore dei bordi */
 }
 
-/* Rimuovi il colore di sfondo dal body, usa --primary-bg al suo posto */
 body {
     background: var(--primary-bg);
-    font-family: Arial, sans-serif;  /* Aggiunto un tipo di carattere predefinito */
 }
 
-/* Aggiungi ombra al bordo con il colore di sfondo */
 .ombra-bordo {
     border: 2px solid var(--border-color);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Modifica i pulsanti con sfondo e testo personalizzati */
 .btn {
     background-color: var(--button-bg);
     color: var(--button-fg);
-    border: none;  /* Rimuovo i bordi dai pulsanti */
+    border: none;  
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    padding: 10px 20px;  /* Aggiunto spazio interno ai pulsanti */
-    cursor: pointer;  /* Cambio il cursore al passaggio del mouse */
+    padding: 10px 20px;  
+    cursor: pointer;  
 }
 
 .btn:hover {
     background-color: #3b7adf;  /* Cambiato il colore al passaggio del mouse */
 }
 
-/* Aggiorna i colori per i titoli e i link */
 h2 {
     color: var(--accent-color);
 }
@@ -46,12 +41,10 @@ p {
 
 a {
     color: var(--link-color);
-    text-decoration: none;  /* Rimuovo il sottolineato dai link */
-    transition: color 0.3s ease;  /* Aggiunta transizione al colore dei link */
+    text-decoration: none;  
+    transition: color 0.3s ease;  
 }
 
 a:hover {
-    color: #007d66;  /* Cambiato il colore dei link al passaggio del mouse */
+    color: #007d66;  
 }
-
-

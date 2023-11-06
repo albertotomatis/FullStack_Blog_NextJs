@@ -7,7 +7,8 @@ import isUserAuthorizedForPost from "@/utils/authorization";
 
 export async function GET() {
     await connectMongoDB();
-    const posts = await Post.find();
+     // Ordina i post in base alla data di creazione (createdAt) in ordine decrescente
+  const posts = await Post.find().sort({ createdAt: -1 });
     return NextResponse.json({ posts });
 }
 
@@ -26,8 +27,8 @@ export async function DELETE(request) {
 
     await connectMongoDB();
 
-    // Ordina i post in base alla data di creazione in ordine decrescente
-    const post = await Post.find().sort({ createdAt: -1 });
+    // Esegui una query per recuperare il post dal database
+    const post = await Post.findOne({ _id: id });
 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
