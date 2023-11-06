@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import createSlug from "@/utils/slug";
+import isUserAuthorizedForPost from "@/utils/authorization";
 
 export async function GET(request, { params }) {
   const { id } = params;
@@ -64,16 +65,4 @@ export async function PUT(request, { params }) {
     console.error("Error:", error);
     return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
   }
-}
-
-function isUserAuthorizedForPost(session, post) {
-  if (session.user.role === "admin") {
-    return true; // Gli amministratori sono autorizzati a modificare tutti i post
-  }
-
-  if (session.user.role === "author" && session.user.id === post.authorId) {
-    return true; // L'utente è l'autore del post, quindi è autorizzato a modificarlo
-  }
-
-  return false; // L'utente non è autorizzato a modificarlo
 }

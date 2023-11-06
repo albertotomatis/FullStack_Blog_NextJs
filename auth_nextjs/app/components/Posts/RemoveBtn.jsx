@@ -3,7 +3,7 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-export default function RemoveBtn({ id }) {
+export default function RemoveBtn({ id, post }) {
   const router = useRouter();
 
   const removeTopic = async () => {
@@ -25,7 +25,7 @@ export default function RemoveBtn({ id }) {
   return (
     session ? (
       session.user.role === "admin" ||
-      (session.user.role === "author" && session.user.id === post.id) ? (
+      (session.user.role === "author" && session.user.id === post.author) ? (
         <button onClick={removeTopic} className="text-red-400 pt-5">
           <HiOutlineTrash size={24} />
         </button>
