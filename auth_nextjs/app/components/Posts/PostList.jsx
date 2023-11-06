@@ -48,7 +48,7 @@ export default async function PostList() {
                 </svg>
                 Tutorial
               </span>
-              {/* data creazione post */}
+              {/* data */}
               <span className="text-sm">{formatItalianDate(post.createdAt)}</span>
             </div>
             <h2 className="mb-2 text-3xl font-bold">

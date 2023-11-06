@@ -8,8 +8,8 @@ import isUserAuthorizedForPost from "@/utils/authorization";
 export async function GET() {
     await connectMongoDB();
      // Ordina i post in base alla data di creazione (createdAt) in ordine decrescente
-  const posts = await Post.find().sort({ createdAt: -1 });
-    return NextResponse.json({ posts });
+     const posts = await Post.find().sort({ createdAt: -1 });
+     return NextResponse.json({ posts });
 }
 
 export async function DELETE(request) {
