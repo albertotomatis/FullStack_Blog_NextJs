@@ -47,7 +47,7 @@ export default async function PostList() {
         <ul className="flex space-x-5 font-light ">
           {uniqueCategories.map((category) => (
             <li key={category}>
-              <Link href={`/blog?category=${category}`} 
+              <Link href={`/blog/category/${category}`}
               className="bg-[#4285f4] text-[#ffffff] text-md lg:text-md font-semibold inline-flex items-center px-3.5 py-1.5 rounded">
                 <ImPacman size={18} className="mr-2" /> {category}
               </Link>
