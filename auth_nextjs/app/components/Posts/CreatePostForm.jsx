@@ -20,7 +20,7 @@ export default function CreatePostForm() {
   const handleCreatePost = async (e) => {
     e.preventDefault();
     if (title.trim() === "" || content.trim() === "") {
-      setErrors({ message: "titolo e contenuto sono obbligatori" });
+      setErrors({ message: "tutti i campi sono obbligatori" });
       return;
     }
     try {
@@ -61,13 +61,13 @@ export default function CreatePostForm() {
 
   return (
     <div className="flex h-screen items-center justify-center w-full">
-      <div className="bg-[#fdfdfd] rounded-lg shadow dark:border md:mt-0 sm:max-w-md md:px-8 md:py-8 xl:px-8 xl:py-8  ombra-bordo">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-          <h2 className="mt-5 text-center text-3xl font-bold px-4 sm:px-8 md:px-8">
-            Crea Post
-          </h2>
+      <div className="grid gap-4 mb-4 max-w-screen-xl items-center justify-between mx-auto w-2/6 bg-[#fdfdfd]  ombra-bordo">
+        <div className="sm:col-span-3">
+            <h2 className="mt-10 text-center text-3xl font-bold px-4">
+              Crea Post
+            </h2>
         </div>
-        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm p-4 sm:p-6 md:p-8">
+        <div className="sm:col-span-3 sm:mx-14 mt-4">
         <form onSubmit={handleCreatePost} className="space-y-6">
           {/* Titolo */}
           <div>
@@ -83,21 +83,8 @@ export default function CreatePostForm() {
               />
             </div>
           </div>
-          {/* Contenuto */}
-          <div>
-            <label className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-              Contenuto
-            </label>
-            <div className="mt-2">
-              <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
-              />
-            </div>
-
-            {/* Categoria */}
-            <div className="mt-6">
+          {/* Categoria */}
+          <div className="mt-6">
               <label htmlFor="category" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
                 Categoria
               </label>
@@ -114,16 +101,30 @@ export default function CreatePostForm() {
                 </select>
               </div>
             </div>
+          {/* Contenuto */}
+          <div>
+            <label className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+              Contenuto
+            </label>
+            <div className="mt-2">
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows="4" className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+              />
+            </div> 
           </div>
-          <button
-            className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900">
-            Crea Post
-          </button>
+          <div className="my-4">
+            <button className="btn flex items-center justify-center mx-auto w-3/4 px-3 py-1.5 mb-10 rounded-lg text-sm font-semibold leading-6 text-slate-900">
+              Crea Post
+            </button>
+          </div>
           {errors.message && (
-          <div className="bg-red-400 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-            {errors.message}
-          </div>
-        )}
+  <div style={{ marginBottom: '2rem' }} className="bg-red-400 text-white flex items-center justify-center mx-auto w-2/4 px-3 py-1.5 text-sm font-semibold leading-6">
+    {errors.message}
+  </div>
+)}
+
         </form>
       </div>
     </div>
