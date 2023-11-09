@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 
@@ -62,78 +63,92 @@ export default function CreatePostForm() {
 
   return (
     <section className="bg-gray-50 h-screen flex items-center justify-center">
-      <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-20 shadow-lg">
-        <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
-          Crea Post
-        </h2>
-        <form
-          onSubmit={handleCreatePost}
-          className="mt-4 space-y-4 lg:mt-5 md:space-y-5"
-          action="#"
-          method="POST"
-        >
-          {/* Titolo */}
-          <div>
-            <label htmlFor="title" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-              Titolo
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          {/* Categoria */}
-          <div className="mt-6">
-            <label htmlFor="category" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-              Categoria
-            </label>
-            <div className="mt-2">
-              <select
-                id="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
-              >
-                <option value="next.js">Next.js</option>
-                <option value="mongoDB">MongoDB</option>
-                <option value="react">React</option>
-                <option value="tailwind">Tailwind</option>
-              </select>
-            </div>
-          </div>
-          {/* Contenuto */}
-          <div>
-            <label className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-              Contenuto
-            </label>
-            <div className="mt-2">
-              <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows="4"
-                className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div className="my-4">
-            <button className="btn flex items-center justify-center mx-auto w-3/4 px-3 py-1.5 mb-10 rounded-lg text-sm font-semibold leading-6 text-slate-900">
+      {session ? (
+        session.user.role === "admin" || session.user.role === "author" ? (
+          <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-20 shadow-lg">
+            <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
               Crea Post
-            </button>
-          </div>
-          {errors.message && (
-            <div
-              style={{ marginBottom: "2rem" }}
-              className="bg-red-400 text-white flex items-center justify-center mx-auto w-2/4 px-3 py-1.5 text-sm font-semibold leading-6"
+            </h2>
+            <form
+              onSubmit={handleCreatePost}
+              className="mt-4 space-y-4 lg:mt-5 md:space-y-5"
+              action="#"
+              method="POST"
             >
-              {errors.message}
-            </div>
-          )}
-        </form>
-      </div>
+              {/* Titolo */}
+              <div>
+                <label htmlFor="title" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+                  Titolo
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              {/* Categoria */}
+              <div className="mt-6">
+                <label htmlFor="category" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+                  Categoria
+                </label>
+                <div className="mt-2">
+                  <select
+                    id="category"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                  >
+                    <option value="next.js">Next.js</option>
+                    <option value="mongoDB">MongoDB</option>
+                    <option value="react">React</option>
+                    <option value="tailwind">Tailwind</option>
+                  </select>
+                </div>
+              </div>
+              {/* Contenuto */}
+              <div>
+                <label className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+                  Contenuto
+                </label>
+                <div className="mt-2">
+                  <textarea
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    rows="4"
+                    className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="my-4">
+                <button className="btn flex items-center justify-center mx-auto w-3/4 px-3 py-1.5 mb-10 rounded-lg text-sm font-semibold leading-6 text-slate-900">
+                  Crea Post
+                </button>
+              </div>
+              {errors.message && (
+                <div
+                  style={{ marginBottom: "2rem" }}
+                  className="bg-red-400 text-white flex items-center justify-center mx-auto w-2/4 px-3 py-1.5 text-sm font-semibold leading-6"
+                >
+                  {errors.message}
+                </div>
+              )}
+            </form>
+          </div>
+        ) : (
+          // L'utente è loggato ma non ha le autorizzazioni necessarie
+          <p className="text-2xl font-medium">
+            Non hai le autorizzazioni necessarie per creare questo post.
+          </p>
+        )
+      ) : (
+        // Utente non autenticato
+        <p className="text-2xl font-medium">
+          Effettua il login per creare un post.
+        </p>
+      )}
     </section>
   );
 }
