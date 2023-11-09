@@ -1,7 +1,6 @@
-'use client';
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { toast } from "react-toastify"; 
+import { toast } from "react-toastify";
 
 export default function CreatePostForm() {
   const { data: session } = useSession();
@@ -11,16 +10,16 @@ export default function CreatePostForm() {
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
-   // cancella gli errori
-   const clearErrors = () => {
+  // Cancella gli errori
+  const clearErrors = () => {
     setErrors({});
-  }
+  };
 
-  // all'invio del form per crea post
+  // All'invio del form per creare il post
   const handleCreatePost = async (e) => {
     e.preventDefault();
     if (title.trim() === "" || content.trim() === "") {
-      setErrors({ message: "tutti i campi sono obbligatori" });
+      setErrors({ message: "Tutti i campi sono obbligatori" });
       return;
     }
     try {
@@ -39,36 +38,40 @@ export default function CreatePostForm() {
 
       if (res.status === 409) {
         // Il titolo è duplicato, mostra un errore
-        setErrors({ message: "Un post con lo stesso titolo esiste già nel database" });
-        } else if (res.ok) {
-          setTitle("");
-          setContent("");
-          clearErrors();
-          setShowSuccessToast(true);
-        } else {
-          console.log('Creazione post fallita.');
-        }
+        setErrors({
+          message: "Un post con lo stesso titolo esiste già nel database",
+        });
+      } else if (res.ok) {
+        setTitle("");
+        setContent("");
+        clearErrors();
+        setShowSuccessToast(true);
+      } else {
+        console.log("Creazione post fallita.");
+      }
     } catch (error) {
-      console.log('Errore durante la creazione del post:', error);
+      console.log("Errore durante la creazione del post:", error);
     }
   };
 
   useEffect(() => {
     if (showSuccessToast) {
-      toast.success('Post creato!');
+      toast.success("Post creato!");
     }
   }, [showSuccessToast]);
 
   return (
-    <div className="flex h-screen items-center justify-center w-full">
-      <div className="grid gap-4 mb-4 max-w-screen-xl items-center justify-between mx-auto w-2/6 bg-[#fdfdfd]  ombra-bordo">
-        <div className="sm:col-span-3">
-            <h2 className="mt-10 text-center text-3xl font-bold px-4">
-              Crea Post
-            </h2>
-        </div>
-        <div className="sm:col-span-3 sm:mx-14 mt-4">
-        <form onSubmit={handleCreatePost} className="space-y-6">
+    <section className="bg-gray-50 h-screen flex items-center justify-center">
+      <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-20 shadow-lg">
+        <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+          Crea Post
+        </h2>
+        <form
+          onSubmit={handleCreatePost}
+          className="mt-4 space-y-4 lg:mt-5 md:space-y-5"
+          action="#"
+          method="POST"
+        >
           {/* Titolo */}
           <div>
             <label htmlFor="title" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
@@ -85,22 +88,23 @@ export default function CreatePostForm() {
           </div>
           {/* Categoria */}
           <div className="mt-6">
-              <label htmlFor="category" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-                Categoria
-              </label>
-              <div className="mt-2">
-                <select
-                  id="category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6">
-                  <option value="next.js">Next.js</option>
-                  <option value="mongoDB">MongoDB</option>
-                  <option value="react">React</option>
-                  <option value="tailwind">Tailwind</option>
-                </select>
-              </div>
+            <label htmlFor="category" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+              Categoria
+            </label>
+            <div className="mt-2">
+              <select
+                id="category"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+              >
+                <option value="next.js">Next.js</option>
+                <option value="mongoDB">MongoDB</option>
+                <option value="react">React</option>
+                <option value="tailwind">Tailwind</option>
+              </select>
             </div>
+          </div>
           {/* Contenuto */}
           <div>
             <label className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
@@ -110,9 +114,10 @@ export default function CreatePostForm() {
               <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                rows="4" className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                rows="4"
+                className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
               />
-            </div> 
+            </div>
           </div>
           <div className="my-4">
             <button className="btn flex items-center justify-center mx-auto w-3/4 px-3 py-1.5 mb-10 rounded-lg text-sm font-semibold leading-6 text-slate-900">
@@ -120,14 +125,15 @@ export default function CreatePostForm() {
             </button>
           </div>
           {errors.message && (
-  <div style={{ marginBottom: '2rem' }} className="bg-red-400 text-white flex items-center justify-center mx-auto w-2/4 px-3 py-1.5 text-sm font-semibold leading-6">
-    {errors.message}
-  </div>
-)}
-
+            <div
+              style={{ marginBottom: "2rem" }}
+              className="bg-red-400 text-white flex items-center justify-center mx-auto w-2/4 px-3 py-1.5 text-sm font-semibold leading-6"
+            >
+              {errors.message}
+            </div>
+          )}
         </form>
       </div>
-    </div>
-    </div>
+    </section>
   );
 }
