@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import { handleInputChange } from "@/app/components/Auth/Validation";
 import { isValidEmail } from "@/utils/validation";
 import { useSession } from "next-auth/react";
@@ -19,7 +19,7 @@ export default function LoginForm() {
   const { data: session } = useSession();
   const router = useRouter();
 
-   // Funzione per cancellare gli errori
+  // Funzione per cancellare gli errori
   const clearErrors = () => {
     setErrors({});
   }
@@ -60,20 +60,16 @@ export default function LoginForm() {
       console.error("An error occurred:", error);
       setErrors({ message: "An error occurred" });
     }
-      
   };
 
   return (
-    <div className="flex h-screen items-center justify-center w-full">
-      <div className="bg-[#fdfdfd] rounded-lg shadow dark:border md:mt-0 sm:max-w-md md:px-8 md:py-8 xl:px-8 xl:py-8  ombra-bordo">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-          <h2 className="mt-5 text-center text-3xl font-bold px-4 sm:px-8 md:px-8">
-            Sign in to your account
-          </h2>
-        </div>
-        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm p-4 sm:p-6 md:p-8">
-        <form onSubmit={handleSubmit} className="space-y-6" action="#" method="POST">
-          { /* email */ }
+    <section className="bg-gray-50 h-screen flex items-center justify-center">
+      <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-20 shadow-lg">
+        <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+          Login
+        </h2>
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#" method="POST">
+          {/* email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 px-2.5">Email</label>
             <div className="mt-2">
@@ -90,7 +86,7 @@ export default function LoginForm() {
               </p>
             )}
           </div>
-          { /* Password */ }
+          {/* Password */}
           <div>
             <div className="flex items-center justify-between">
               <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900 px-2.5">Password</label>
@@ -105,7 +101,7 @@ export default function LoginForm() {
                 onChange={handleChange}
                 type={passwordVisible ? 'text' : 'password'}
                 name="password"
-                className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300  focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
               />
               <button
                 type="button"
@@ -125,26 +121,26 @@ export default function LoginForm() {
             <button
               type="submit"
               className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900">
-              Login
+              Accedi
             </button>
           </div>
           {errors.invalidCredentials && (
-  <div className="bg-red-400 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-    {errors.invalidCredentials}
-  </div>
-)}
+            <div className="bg-red-400 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
+              {errors.invalidCredentials}
+            </div>
+          )}
 
-{errors.emailNotVerified && (
-  <div className="bg-red-400 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-    {errors.emailNotVerified}
-  </div>
-)}
+          {errors.emailNotVerified && (
+            <div className="bg-red-400 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
+              {errors.emailNotVerified}
+            </div>
+          )}
 
-{errors.message && (
-  <div className="bg-red-400 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
-    {errors.message}
-  </div>
-)}
+          {errors.message && (
+            <div className="bg-red-400 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
+              {errors.message}
+            </div>
+          )}
         </form>
         <p className="mt-10 text-center text-sm font-bold text-gray-500">
           Not a member?{" "}
@@ -153,7 +149,6 @@ export default function LoginForm() {
           </Link>
         </p>
       </div>
-    </div>
-    </div>
+    </section>
   );
 }
