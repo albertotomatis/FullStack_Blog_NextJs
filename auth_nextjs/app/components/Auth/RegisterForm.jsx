@@ -9,9 +9,8 @@ import { isValidEmail, isValidName } from "@/utils/validation";
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 export default function RegisterForm() {
-
-  const { data:session } = useSession();
-  const isAdmin = session?.user?.role === 'admin'; 
+  const { data: session } = useSession();
+  const isAdmin = session?.user?.role === 'admin';
 
   const [formData, setFormData] = useState({
     name: '',
@@ -24,17 +23,17 @@ export default function RegisterForm() {
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
-  // validazioni mentre l'utente digita
+  // Validazioni mentre l'utente digita
   const handleChange = (e) => {
     handleInputChange(e, formData, setFormData, errors, setErrors, isValidEmail, isValidName);
   }
 
-  // show - hide password
+  // Mostra o nasconde la password
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
   };
 
-  // all'invio del form
+  // Alla sottomissione del modulo
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,7 +46,7 @@ export default function RegisterForm() {
 
     // Invia i dati al server
     try {
-      const res = await fetch('api/register', {
+      const res = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,33 +63,30 @@ export default function RegisterForm() {
         const errorData = await res.json();
         setErrors({ email: errorData.message });
       } else {
-        console.log('User registration failed.');
+        console.log('Registrazione utente fallita.');
       }
     } catch (error) {
-      console.log('Error during registration:', error);
+      console.error('Errore durante la registrazione:', error);
     }
   };
 
   useEffect(() => {
     if (showSuccessToast) {
-      toast.success('User registration success.');
+      toast.success('Registrazione utente avvenuta con successo.');
     }
   }, [showSuccessToast]);
 
   return (
-    <div className="flex h-screen items-center justify-center w-full">
-      <div className="bg-[#fdfdfd] rounded-lg shadow dark:border md:mt-0 sm:max-w-md md:px-8 md:py-8 xl:px-8 xl:py-8  ombra-bordo">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-        <h2 className="mt-5 text-center text-3xl font-bold px-4 sm:px-8 md:px-8">
-          Create an account
+    <section className="bg-gray-50 h-screen flex items-center justify-center">
+      <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-20 shadow-lg">
+        <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+          Registrazione
         </h2>
-      </div>
-      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm p-4 sm:p-6 md:p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name */ }
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#" method="POST">
+          {/* Nome */}
           <div>
             <label htmlFor="name" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-              Name
+              Nome
             </label>
             <div className="mt-2">
               <input
@@ -106,10 +102,10 @@ export default function RegisterForm() {
               )}
             </div>
           </div>
-          {/* Email */ }
+          {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-              Email 
+              Email
             </label>
             <div className="mt-2">
               <input
@@ -125,38 +121,38 @@ export default function RegisterForm() {
               )}
             </div>
           </div>
-        {/* Password */}
-        <div>
-          <label htmlFor="password" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-            Password
-          </label>
-          <div className="mt-2 relative" style={{ height: '2.5rem' }}>
-            <input
-              onChange={handleChange}
-              name="password"
-              type={passwordVisible ? 'text' : 'password'}
-              autoComplete="current-password"
-              className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
-            />
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-700"
-            >
-              {passwordVisible ? <HiEye /> : <HiEyeOff />}
-            </button>
+          {/* Password */}
+          <div>
+            <label htmlFor="password" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+              Password
+            </label>
+            <div className="mt-2 relative" style={{ height: '2.5rem' }}>
+              <input
+                onChange={handleChange}
+                name="password"
+                type={passwordVisible ? 'text' : 'password'}
+                autoComplete="current-password"
+                className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-700"
+              >
+                {passwordVisible ? <HiEye /> : <HiEyeOff />}
+              </button>
             </div>
             {errors.password && (
               <p className="text-red-400 font-bold w-fit text-sm py-1 px-3 rounded-md mt-2">
                 {errors.password}
               </p>
             )}
-        </div>
-          {/* Role */}
+          </div>
+          {/* Ruolo */}
           {isAdmin && (
             <div>
               <label htmlFor="role" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
-                Role
+                Ruolo
               </label>
               <div className="mt-2">
                 <select
@@ -171,20 +167,19 @@ export default function RegisterForm() {
               </div>
             </div>
           )}
-
           <div>
             <button
               type="submit"
-              className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900">
-              Register
+              className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900"
+            >
+              Registra
             </button>
           </div>
         </form>
         <p className="mt-10 text-center text-sm font-bold text-gray-500">
-          Already member? <Link href={'/login'} className="font-bold leading-6 text-[#51A6DB] hover:text-sky-900">Login</Link>
+          Già registrato? <Link href={'/login'} className="font-bold leading-6 text-[#51A6DB] hover:text-sky-900">Login</Link>
         </p>
       </div>
-    </div>
-    </div>
+    </section>
   );
 }
