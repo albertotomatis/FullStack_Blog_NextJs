@@ -1,4 +1,21 @@
-export default async function ResetPasswordSent() {
+'use client';
+import { getSession } from 'next-auth/react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function ResetPasswordSent() {
+  const router = useRouter();
+  const { data: session } = getSession();
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/');
+    }
+  }, [router, session]);
+
+  if (!session) {
+    return null; // Interrompe il rendering della pagina sul server
+  }
 
   return (
     <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
@@ -17,3 +34,4 @@ export default async function ResetPasswordSent() {
     </div>
   );
 }
+
