@@ -52,14 +52,14 @@ export default function Navbar() {
                     <div className="px-4 py-2">
                       <span className="block text-bold">Hello, {session?.user?.name}</span>
                     </div>
-                    <Link href="/" className="block px-4 py-2">
+                    <Link href="/dashboard" className="block px-4 py-2 text-gray-900 hover:text-white">
                       Dashboard
                     </Link>
-                    <Link href="/" className="block px-4 py-2">
+                    <Link href="/" className="block px-4 py-2 text-gray-900 hover:text-white">
                       Settings
                     </Link>
                     <Link href="/" onClick={handleLogout}
-                      className="block px-4 py-2 text-gray-900">
+                      className="block px-4 py-2 text-gray-900 hover:text-white">
                       Logout
                     </Link>
                   </div>

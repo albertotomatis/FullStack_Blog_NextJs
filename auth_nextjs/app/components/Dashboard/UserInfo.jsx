@@ -19,7 +19,11 @@ export default function UserInfo() {
     <div className="sm:mx-auto sm:w-full sm:max-w-sm py-5">
         <div>Role: <span className="font-bold">{session?.user?.role}</span></div>
     </div>
-    <Link href="/creaPost" >Crea post</Link>
+    <div className="sm:mx-auto sm:w-full sm:max-w-sm py-5">
+      <button type="button" className="btn font-semibold rounded-lg text-sm px-4 py-2 text-center mr-5">
+        <Link href="/creaPost" className="text-white">Crea post</Link>
+      </button>
+    </div>
   </div>
     )
 }
