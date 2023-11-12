@@ -1,11 +1,29 @@
 'use client';
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useRouter } from "next/navigation";
-import { validateFormData, validatePassword, handleInputChange } from "@/app/components/Auth/Validation";
+import { useRouter } from 'next/navigation';
+import { isValidPassword } from "../../../utils/validation";
 
-export function ResetPasswordForm() {
+const validateFormData = (formData) => {
+  const errors = {};
 
+  if (!formData.password) {
+    errors.password = "La password è un campo obbligatorio";
+  }
+
+  return errors;
+}
+
+const handleInputChange = (event, formData, setFormData, errors, setErrors, isValidEmail) => {
+  const { name, value } = event.target;
+
+  setFormData({
+    ...formData,
+    [name]: value
+  });
+}
+
+export default function ResetPasswordForm() {
   const router = useRouter();
 
   // Prende il token dall'URL
@@ -16,11 +34,15 @@ export function ResetPasswordForm() {
     password: '',
   });
 
+
+
   const [errors, setErrors] = useState({});
   const [tokenExpired, setTokenExpired] = useState(false);
 
+
+
   const handleChange = (e) => {
-    handleInputChange(e, formData, setFormData, errors, setErrors, validatePassword);
+    handleInputChange(e, formData, setFormData, errors, setErrors, isValidPassword);
   }
 
   const handleSubmit = async (e) => {
@@ -39,7 +61,6 @@ export function ResetPasswordForm() {
       return;
     }
 
-    // Verifica se il token è valido inviando una richiesta al server
     try {
       const resetRes = await fetch(`/api/resetpass/${token}`, {
         method: 'POST',
@@ -75,7 +96,7 @@ export function ResetPasswordForm() {
         ) : (
           <>
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+              <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
                 Nuova password
               </h2>
             </div>
@@ -110,5 +131,3 @@ export function ResetPasswordForm() {
     </section>
   );
 }
-
-export default ResetPasswordForm;

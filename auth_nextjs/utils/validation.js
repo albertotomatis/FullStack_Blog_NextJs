@@ -6,10 +6,10 @@ export function isValidName(name) {
 }
 
 // validazione email
-export function isValidEmail(email) {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
-  }
+export function isValidEmail(email)  {
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  return emailRegex.test(email);
+}
 
 // validazione password
 export function isValidPassword(password) {
@@ -41,4 +41,4 @@ export function isValidPassword(password) {
     // Se tutti i criteri sono soddisfatti, la password è valida
     return true;
   }
-  
+ 

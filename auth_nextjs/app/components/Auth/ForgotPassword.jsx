@@ -2,7 +2,33 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; 
-import { validateFormData, validateEmail, handleInputChange } from "@/app/components/Auth/Validation";
+import { isValidEmail } from "../../../utils/validation";
+
+const validateFormData = (formData) =>  {
+  const errors = {};
+
+  if (!formData.email) {
+    errors.email = "L'email è un campo obbligatorio";
+  }
+
+  return errors;
+}
+
+const handleInputChange = (event, formData, setFormData, errors, setErrors, isValidEmail) =>  {
+  const { name, value } = event.target;
+
+  // Aggiornare lo stato del modulo con i nuovi dati inseriti
+  setFormData({
+    ...formData,
+    [name]: value
+  });
+
+  // Validazione dell'email
+  if (name === 'email') {
+    const emailError = isValidEmail(value) ? '' : 'Inserisci un indirizzo email valido';
+    setErrors({ ...errors, email: emailError });
+  }
+}
 
 export default function ForgotPassword() {
   const router = useRouter();
@@ -14,7 +40,7 @@ export default function ForgotPassword() {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    handleInputChange(e, formData, setFormData, errors, setErrors, validateEmail);
+    handleInputChange(e, formData, setFormData, errors, setErrors, isValidEmail);
   }
 
   const handleSubmit = async (e) => {
@@ -69,7 +95,7 @@ export default function ForgotPassword() {
             </div>
           </div>
           <div>
-          <button
+            <button
               type="submit"
               className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900">
               Invia

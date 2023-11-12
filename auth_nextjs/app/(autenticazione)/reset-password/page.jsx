@@ -1,15 +1,5 @@
-'use client';
-import { ResetPasswordForm } from '../../components/Auth/ResetPasswordForm';
-import { getSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import ResetPasswordForm from '../../components/Auth/ResetPasswordForm';
 
-export default function ResetPassword() {
-  const router = useRouter();
-  const { data: session } = getSession();
-
-  if (!session) {
-    router.push('/');
-    return null; // Interrompe il rendering della pagina
-  }
+export default async function ResetPassword() {
   return <ResetPasswordForm />;
 }
