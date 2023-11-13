@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import RemoveBtn from "@/app/components/Posts/RemoveBtn";
 import { ImPacman } from "react-icons/im";
+import htmlSanitizer from "@/utils/sanitizeHtml";
 
 const getPosts = async () => {
   try {
@@ -73,11 +74,14 @@ export default async function PostList() {
               <Link href={`/blog/${post.slug}`}>{post.title}</Link>
             </h2>
             <p className="mb-5">
-             {/* se la lunghezza del contenuto del post supera i 200 
-             utilizza slice(0, 200) per ottenere i primi 200 caratteri e aggiunge "..." alla fine.
-             Se il contenuto è più breve di 200 caratteri, viene mostrato senza "..." 
-            */} 
-              {post.content.length > 200 ? `${post.content.slice(0, 200)}...` : post.content}
+              {/* Sanificazione del contenuto */}
+              {post.content.length > 200 ? (
+                <>
+                  {post.content.slice(0, 200)}...
+                </>
+              ) : (
+                <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content) }} />
+              )}
             </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-4">

@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import RemoveBtn from "@/app/components/Posts/RemoveBtn";
 import { ImPacman } from "react-icons/im";
+import htmlSanitizer from "@/utils/sanitizeHtml";
 
 const getPostBySlug = async (slug) => {
   try {
@@ -45,7 +46,9 @@ export default async function SinglePost({ params }) {
             </div>
             {/* title */}
             <h2 className="mb-2 text-3xl font-bold">{post.title}</h2>
-            <p className="my-5">{post.content}</p>
+            <p className="my-5">
+              <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content) }} />
+            </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-4">
                 <span className="font-medium">CodeLab Team</span>

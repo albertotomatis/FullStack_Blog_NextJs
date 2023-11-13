@@ -2,8 +2,20 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import htmlSanitizer from "@/utils/sanitizeHtml";
 
 export default function CreatePostForm() {
+  // Quill Editor
+  var toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'], 
+    ['link'],  
+  ];
+  const module = {
+      toolbar: toolbarOptions,
+  }
+
   const { data: session } = useSession();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -23,6 +35,10 @@ export default function CreatePostForm() {
       setErrors({ message: "Tutti i campi sono obbligatori" });
       return;
     }
+
+    // Sanifica il contenuto prima di inviarlo al server
+  const sanitizedContent = htmlSanitizer(content);
+
     try {
       const res = await fetch("/api/createPost", {
         method: "POST",
@@ -31,7 +47,7 @@ export default function CreatePostForm() {
         },
         body: JSON.stringify({
           title,
-          content,
+          content: sanitizedContent, // Utilizza il contenuto sanificato
           author: session.user.id,
           category, // Includi l'ID dell'autore dalla sessione
         }),
@@ -65,7 +81,7 @@ export default function CreatePostForm() {
     <section className="bg-gray-50 h-screen flex items-center justify-center">
       {session ? (
         session.user.role === "admin" || session.user.role === "author" ? (
-          <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-20 shadow-lg">
+          <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-6 shadow-lg">
             <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
               Crea Post
             </h2>
@@ -114,12 +130,15 @@ export default function CreatePostForm() {
                   Contenuto
                 </label>
                 <div className="mt-2">
-                  <textarea
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    rows="4"
-                    className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                <div className="mt-2">
+                  <ReactQuill 
+                  modules={module}
+                  theme="snow" 
+                  value={content}
+                  onChange={setContent}
+                  className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-10 text-gray-900  placeholder:text-gray-400  sm:text-sm sm:leading-6"
                   />
+                </div>
                 </div>
               </div>
               <div className="my-4">

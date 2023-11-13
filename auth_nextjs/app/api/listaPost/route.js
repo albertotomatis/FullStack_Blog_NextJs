@@ -14,7 +14,6 @@ export async function GET() {
 
 export async function DELETE(request) {
     const id = request.nextUrl.searchParams.get("id");
-
     // Ottieni la sessione dell'utente solo se è autenticato
     const session = await getServerSession(authOptions);
 
@@ -42,5 +41,6 @@ export async function DELETE(request) {
     }
 
     await Post.findByIdAndDelete(id);
-    return NextResponse.json({ message: "Post Deleted" }, {status: 200});
+    const updatedPosts = await Post.find().sort({ createdAt: -1 });
+    return NextResponse.json({ posts: updatedPosts }, { status: 200 });
 }
