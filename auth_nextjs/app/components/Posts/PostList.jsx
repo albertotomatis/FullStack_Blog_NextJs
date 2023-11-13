@@ -7,6 +7,8 @@ import htmlSanitizer from "@/utils/sanitizeHtml";
 import { useState, useEffect } from 'react';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 
 export default function PostList() {
   const router = useRouter();
@@ -62,7 +64,7 @@ export default function PostList() {
         </p>
       {/* Elenco delle categorie */}
         <h3 className="mb-8 text-2xl lg:text-2xl font-semibold mt-12">{"{ Categorie }"}</h3>
-        <ul className="flex space-x-5 font-light ">
+        <ul className="flex space-x-5 font-light">
           {uniqueCategories.map((category) => (
             <li key={category}>
               <Link href={`/blog/category/${category}`}
@@ -126,9 +128,15 @@ export default function PostList() {
         ))}
       </div>
        {/* Controlli di paginazione */}
-       <div>
-        <button onClick={() => paginate(currentPage - 1)}>Previous Page</button>
-        <button onClick={() => paginate(currentPage + 1)}>Next Page</button>
+       <div className="mt-12 flex justify-center space-x-12 font-light ">
+        <button className="btn text-md lg:text-md font-semibold inline-flex items-center px-3.5 py-1.5 rounded"  
+          onClick={() => paginate(currentPage - 1)}>
+          <span><HiOutlineArrowNarrowLeft size={24} className="mr-2" /></span> Previous  
+        </button>
+        <button className="btn text-md lg:text-md font-semibold inline-flex items-center px-3.5 py-1.5 rounded"  
+          onClick={() => paginate(currentPage + 1)}>
+          Next <span><HiOutlineArrowNarrowRight size={24} className="ml-2" /></span>
+        </button>
       </div>
     </div>
     );
