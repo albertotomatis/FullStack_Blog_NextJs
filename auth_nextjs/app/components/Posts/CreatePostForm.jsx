@@ -142,7 +142,7 @@ export default function CreatePostForm() {
                 </div>
               </div>
               <div className="my-4">
-                <button className="btn flex items-center justify-center mx-auto w-3/4 px-3 py-1.5 mb-10 rounded-lg text-sm font-semibold leading-6 text-slate-900">
+                <button className="btn flex items-center justify-center mx-auto w-3/4 px-3 py-1.5 mb-10 rounded-lg text-sm font-semibold leading-6">
                   Crea Post
                 </button>
               </div>

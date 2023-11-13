@@ -21,7 +21,7 @@ export default function UserInfo() {
     </div>
     <div className="sm:mx-auto sm:w-full sm:max-w-sm py-5">
       <button type="button" className="btn font-semibold rounded-lg text-sm px-4 py-2 text-center mr-5">
-        <Link href="/creaPost" className="text-white">Crea post</Link>
+        <Link href="/creaPost" className="text-white hover:text-white">Crea post</Link>
       </button>
     </div>
   </div>
