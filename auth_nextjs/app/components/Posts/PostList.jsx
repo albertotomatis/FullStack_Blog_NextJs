@@ -1,36 +1,53 @@
+'use client';
 import Link from "next/link";
 import { BiEdit } from "react-icons/bi";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import RemoveBtn from "@/app/components/Posts/RemoveBtn";
 import { ImPacman } from "react-icons/im";
 import htmlSanitizer from "@/utils/sanitizeHtml";
+import { useState, useEffect } from 'react';
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 
-const getPosts = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/api/listaPost", {
-      cache: "no-store",
-    });
-    if (!res.ok) {
-      throw new Error("Failed to fetch posts");
+export default function PostList() {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [postsPerPage] = useState(4);
+  const [pageCount, setPageCount] = useState(0);
+
+  useEffect(() => {
+    const fetchPosts = async (page) => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/listaPost?page=${page}`);
+        const data = await response.json();
+  
+        console.log("Fetched Data:", data);
+  
+        setPosts(data.posts);
+        setPageCount(Math.ceil(data.totalPosts / postsPerPage));
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+  
+    fetchPosts(currentPage); 
+  }, [currentPage, postsPerPage]); 
+  
+  const paginate = (pageNumber) => {
+    const maxPage = Math.floor(posts.length / postsPerPage);
+  
+    if (pageNumber >= 0 && pageNumber <= maxPage) {
+      setCurrentPage(pageNumber);
+      router.push(`/blog?page=${pageNumber}`);
     }
-    return res.json();
-  } catch (error) {
-    console.log("Error loading posts: ", error);
-  }
-};
+  };
+  
+  const formatItalianDate = (date) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Intl.DateTimeFormat('it-IT', options).format(new Date(date));
+  };
 
-{/* Formattazione della data (ad esempio: 6 novembre 2023 */}
-const formatItalianDate = (date) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Intl.DateTimeFormat('it-IT', options).format(new Date(date));
-}
-
-export default async function PostList() {
-  const { posts } = await getPosts();
-  const session = await getServerSession(authOptions);
-
-  // Estrai tutte le categorie univoche dai post
   const uniqueCategories = [...new Set(posts.map((post) => post.category))];
 
   return (
@@ -108,6 +125,12 @@ export default async function PostList() {
           </article>
         ))}
       </div>
+       {/* Controlli di paginazione */}
+       <div>
+        <button onClick={() => paginate(currentPage - 1)}>Previous Page</button>
+        <button onClick={() => paginate(currentPage + 1)}>Next Page</button>
+      </div>
     </div>
-  );
-}
+    );
+  }
+

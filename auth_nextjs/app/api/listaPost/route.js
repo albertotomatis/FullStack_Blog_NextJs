@@ -5,10 +5,18 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import isUserAuthorizedForPost from "@/utils/authorization";
 
-export async function GET() {
+export async function GET(request) {
     await connectMongoDB();
+     // current page
+    const page = request.nextUrl.searchParams.get("page") || 0
+    const postPerPage = 4;
+
      // Ordina i post in base alla data di creazione (createdAt) in ordine decrescente
-     const posts = await Post.find().sort({ createdAt: -1 });
+     const posts = await Post.find()
+     .sort({ createdAt: -1 })
+     .skip(page * postPerPage)
+     .limit(postPerPage)
+     ;
      return NextResponse.json({ posts });
 }
 
