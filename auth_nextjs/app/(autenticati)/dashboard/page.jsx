@@ -1,7 +1,9 @@
-import UserInfo from "../../components/Dashboard/UserInfo";
+import ListaUtenti from "../../components/Dashboard/ListaUtenti";
 
 export default function Dashboard() {
     return (
-    <UserInfo />
+        <>
+        <ListaUtenti />
+        </>
     )
 }
