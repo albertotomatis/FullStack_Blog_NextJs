@@ -3,11 +3,21 @@ import User from "@/models/user";
 import { NextResponse } from "next/server";
 
 
-await connectMongoDB();
-
 export async function GET(request) {
+  await connectMongoDB();
   const utenti = await User.find();
-  return NextResponse.json({ utenti });
+
+  // filtra utenti in base al ruolo
+const role = request.nextUrl.searchParams.get('role') || 'all';
+
+const filteredUsers = utenti.filter(user => {
+  if (role === 'all') {
+    return true;
+  } else {
+    return user.role === role;
+  }
+});
+  return NextResponse.json({ utenti: filteredUsers }, { status: 200 });
 }
 
 export async function DELETE(request) {
@@ -22,5 +32,3 @@ export async function DELETE(request) {
   await User.findByIdAndDelete(id);
   return NextResponse.json({ user }, { status: 200 });
 }
-
-

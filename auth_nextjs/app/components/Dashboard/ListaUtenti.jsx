@@ -9,10 +9,11 @@ const ListaUtenti = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [users, setUsers] = useState([]);
+  const [filter, setFilter] = useState('all'); 
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/listaUtenti`);
+      const response = await fetch(`/api/listaUtenti?role=${filter}`);
       const data = await response.json();
       setUsers(data.utenti);
       console.log("Fetched Data:", data);
@@ -35,7 +36,8 @@ const ListaUtenti = () => {
           <Link href="/creaPost" className="text-white hover:text-white">Crea post</Link>
         </button>
       </div>
-      <Paginate users={users} />
+      
+      <Paginate users={users} role={filter} onRoleChange={setFilter} />
 </div>
 </div>
   );

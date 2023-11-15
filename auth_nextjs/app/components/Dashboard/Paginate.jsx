@@ -5,16 +5,18 @@ import DeleteUser from "@/app/components/Dashboard/DeleteUser";
 import { GoPersonAdd } from "react-icons/go";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
+import { MdFilterListAlt } from "react-icons/md";
 
-const Paginate = ({ users }) => {
-    const itemsPerPage = 3;
+const Paginate = ({ users, role, onRoleChange  }) => {
+    const filteredUsers = role === 'all' ? users : users.filter(user => user.role === role);
+    const itemsPerPage = 4; // utenti per pagina nella tabella
     const [currentPage, setCurrentPage] = useState(0);
   
     // Calcola l'offset
     const offset = currentPage * itemsPerPage;
   
     // Calcola l'array degli utenti paginati
-    const paginatedUsers = users && users.slice(offset, offset + itemsPerPage);
+    const paginatedUsers = filteredUsers.slice(offset, offset + itemsPerPage);
   
     // Calcola il numero totale di utenti visualizzati
     const totalDisplayedUsers = offset + (paginatedUsers?.length || 0);
@@ -25,7 +27,7 @@ const Paginate = ({ users }) => {
 
   return (
     <div>
-<h3 className="mb-4 mt-8 text-3xl lg:text-3xl font-extrabold hover:text-white">Lista Utenti</h3>
+<h3 className="mb-4 mt-8 text-3xl lg:text-3xl font-extrabold">Lista Utenti</h3>
 <table className="border-2-collapse border-2 w-full">
       <thead>
         <tr>
@@ -36,6 +38,22 @@ const Paginate = ({ users }) => {
                 <GoPersonAdd size={22} className="mr-2" /> Registra un nuovo utente
               </Link>
             </span>
+            <div className="mb-4 mt-2 flex items-center">
+              <span><MdFilterListAlt size={22} className="mr-2" /></span>
+              <label htmlFor="roleFilter" className="mr-2">
+                Filtra per ruolo:
+              </label>
+              <select
+                id="roleFilter"
+                className="border p-2 rounded-md font-normal"
+                value={role}
+                onChange={(e) => onRoleChange(e.target.value)}
+              >
+                <option value="all">Tutti</option>
+                <option value="admin">Admin</option>
+                <option value="author">Autori</option>
+              </select>
+            </div>
           </th>
         </tr>
               <tr>
@@ -47,26 +65,28 @@ const Paginate = ({ users }) => {
             </thead>
             {/* Corpo della tabella */}
             <tbody>
-              {paginatedUsers && paginatedUsers.map((user, index) => (
-                <tr key={user._id} className={index % 2 === 0 ? 'bg-green-100' : 'bg-white'}>
-                  <td className="border-2 p-3">{user.name}</td>
-                  <td className="border-2 p-3">{user.email}</td>
-                  <td className="border-2 p-3">{user.role}</td>
-                  <td className="border-2 p-3">
-                    <DeleteUser id={user._id} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+          {/* Mostra solo gli utenti paginati dalla lista filtrata */}
+          {paginatedUsers.map((user, index) => (
+            <tr key={user._id} className={index % 2 === 0 ? 'bg-green-100' : 'bg-white'}>
+              <td className="border-2 p-3">{user.name}</td>
+              <td className="border-2 p-3">{user.email}</td>
+              <td className="border-2 p-3">{user.role}</td>
+              <td className="border-2 p-3">
+                <DeleteUser id={user._id} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
             {/* Footer */}
             <tfoot>
   <tr>
     <td colSpan="4" className="text-center">
-      <div className="max-w-screen-xl mx-auto p-4 flex items-center justify-between m-2">
-        <span className="mr-2">Utenti {`${totalDisplayedUsers} / ${users.length} `}</span>
-        <div className="flex items-center">
+      <div className="max-w-screen-xl mx-auto p-4 flex items-center justify-between">
+        {/* Paginazione */ }
+      <span className="mr-2">Utenti {`${totalDisplayedUsers} / ${users.length} `}</span>
+        <div className="flex items-center m-2">
           <ReactPaginate
-            pageCount={Math.ceil(users.length / itemsPerPage)}
+            pageCount={Math.ceil(filteredUsers.length / itemsPerPage)}
             onPageChange={handlePageClick}
             containerClassName="pagination flex space-x-6 items-center" 
             pageClassName="page-item hidden"
