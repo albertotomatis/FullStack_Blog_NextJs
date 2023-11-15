@@ -1,7 +1,7 @@
 #  Blog con Next.js, MongoDb, NextAuth, React, Tailwind.
 
 # Principali funzionalità
-### Register, Email verification, Login, Forgot Password, Autorizzazioni, Crud Post e Utenti, Pagination, Search with Filter.
+### Register, Email verification, Login, Forgot Password, Autorizzazioni, Crud Post e Utenti, Categories,  Pagination, Search with Filter.
 
 # Installazione
 
