@@ -1,18 +1,30 @@
-#  Blog con Next.js, MongoDb, NextAuth, React, Tailwind.
+#  🚀 &nbsp;Blog 
+## 🖥️ &nbsp;Tech Stack
+### 
+- Next.js
+- MongoDB
+- React
+- Tailwind
 
-# Principali funzionalità
-### Register, Email verification, Login, Forgot Password, Autorizzazioni, Crud Post e Utenti, Categories,  Pagination, Search with Filter.
+## 🕹️ &nbsp;Funzionalità
+### 
+- Register
+- Email verification
+- Login
+- Forgot Password
+-  Autorizzazioni
+-  Crud Post e Utenti
+-  Categories
+-  Pagination
+-  Search with Filter
+-  Dashboard
 
-# Installazione
+## ⚙️ &nbsp;Installazione
 
-##  1)  Crea il database in MongoDB
-### Crea il db 
-
-## 2)  Inserisci il primo utente con ruolo di admin.
-### Fallo velocemente con Postman
-
-##  3)  File .env
-### Crea il file '.env' e aggiungi le seguenti righe.
+###  1️⃣ &nbsp;Crea il database in MongoDB
+###  2️⃣ &nbsp;Inserisci il primo utente con ruolo di admin.
+###  3️⃣ &nbsp;File .env
+#### Crea il file '.env' e aggiungi le seguenti righe.
 
 ```bash
 MONGODB_URI =
@@ -20,13 +32,13 @@ NEXTAUTH_SECRET =
 SECRET_KEY_WITH_SALT = 
 ```
 
-##  4)  Installa le dipendenze
+###  4️⃣ &nbsp;Installa le dipendenze
 
 ```bash
 npm install
 ```
 
-##  5)  Avvia il progetto 
+###  5️⃣ &nbsp;Avvia il progetto 
 
 ```bash
 npm run dev
