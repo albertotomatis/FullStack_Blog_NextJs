@@ -24,7 +24,7 @@
 ###  1️⃣ &nbsp;Crea il database in MongoDB
 ###  2️⃣ &nbsp;Inserisci il primo utente con ruolo di admin.
 ###  3️⃣ &nbsp;File .env
-### Crea il file '.env' e aggiungi le seguenti righe.
+#### Crea il file '.env' e aggiungi le seguenti righe.
 
 ```bash
 MONGODB_URI =
@@ -38,7 +38,7 @@ SECRET_KEY_WITH_SALT =
 npm install
 ```
 
-##  5️⃣ &nbsp;Avvia il progetto 
+###  5️⃣ &nbsp;Avvia il progetto 
 
 ```bash
 npm run dev
