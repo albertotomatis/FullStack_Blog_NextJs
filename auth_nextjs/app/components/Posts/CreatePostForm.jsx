@@ -19,7 +19,7 @@ export default function CreatePostForm() {
   const { data: session } = useSession();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("next.js");
+  const [category, setCategory] = useState("nextjs");
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
@@ -117,7 +117,7 @@ export default function CreatePostForm() {
                     onChange={(e) => setCategory(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
                   >
-                    <option value="next.js">Next.js</option>
+                    <option value="nextjs">Nextjs</option>
                     <option value="mongoDB">MongoDB</option>
                     <option value="react">React</option>
                     <option value="tailwind">Tailwind</option>

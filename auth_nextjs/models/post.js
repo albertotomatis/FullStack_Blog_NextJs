@@ -21,7 +21,7 @@ const postSchema = new Schema(
     },
     category: {
       type: String,
-      enum: ["next.js", "mongoDB", "react", "tailwind"], 
+      enum: ["nextjs", "mongoDB", "react", "tailwind"], 
       required: true,
     },
   },

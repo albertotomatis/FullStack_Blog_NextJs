@@ -44,7 +44,9 @@ export default async function CategoryPage({ params }) {
     return (
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
         <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8 pt-16">
-        <h2 className="mb-4 text-4xl lg:text-5xl font-extrabold">Blog</h2>
+        <Link href={'/blog'} >
+          <h2 className="mb-4 text-4xl lg:text-5xl font-extrabold">Blog</h2>
+        </Link>
         {/* Elenco delle categorie */}
           <h3 className="mb-8 text-2xl lg:text-2xl font-semibold mt-12">
           Categoria:
@@ -64,7 +66,7 @@ export default async function CategoryPage({ params }) {
                 <span className="text-sm">{formatItalianDate(post.createdAt)}</span>
               </div>
               {/* title */}
-              <h2 className="mb-2 text-3xl font-bold">
+              <h2 className="mb-2 text-3xl font-bold block max-w-full overflow-hidden overflow-ellipsis">
                 <Link href={`/blog/${post.slug}`}>{post.title}</Link>
               </h2>
               <p className="mb-5">

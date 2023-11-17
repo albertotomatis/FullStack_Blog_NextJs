@@ -62,34 +62,22 @@ export default function PostList() {
         <p className="font-light text-xl sm:text-2xl">
           Debitis porro non rem repellat aspernatur molestiae.
         </p>
-      {/* Elenco delle categorie */}
-        <h3 className="mb-8 text-2xl lg:text-2xl font-semibold mt-12">{"{ Categorie }"}</h3>
-        <ul className="flex space-x-5 font-light">
-          {uniqueCategories.map((category) => (
-            <li key={category}>
-              <Link href={`/blog/category/${category}`}
-              className="bg-[#4285f4] text-[#ffffff] text-md lg:text-md font-semibold inline-flex items-center px-3.5 py-1.5 rounded">
-                <ImPacman size={18} className="mr-2" /> {category}
-              </Link>
-            </li>
-          ))}
-        </ul>
       </div>
- 
       {/* Posts */}
       <div className="grid gap-8 lg:grid-cols-2">
         {posts.map((post) => (
           <article key={post._id} className="p-6 bg-white rounded-lg border border-[#e0e0e0]">
             <div className="flex justify-between items-center mb-5 text-gray-600">
-              <span className="bg-[#F5E9C4] text-[#333333] text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded">
-              <ImPacman size={14} className="mr-1" />
+              <Link href={`/blog/category/${post.category}`} 
+                className="bg-[#F5E9C4] text-[#333333] text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded">
+                <ImPacman size={14} className="mr-1" />
                 {post.category}
-              </span>
+            </Link>
               {/* data */}
               <span className="text-sm">{formatItalianDate(post.createdAt)}</span>
             </div>
             {/* title */}
-            <h2 className="mb-2 text-3xl font-bold">
+            <h2 className="mb-2 text-3xl font-bold block max-w-full overflow-hidden overflow-ellipsis">
               <Link href={`/blog/${post.slug}`}>{post.title}</Link>
             </h2>
             <p className="mb-5">
