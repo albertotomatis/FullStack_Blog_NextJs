@@ -25,8 +25,14 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: ["admin", "author", "user"],
-      default: "user", // Imposta il valore predefinito su "user" se non specificato
+      default: "user", 
     },
+    postPreferiti: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Post', 
+      },
+    ],
     passwordResetToken: {
       type: String,
     },

@@ -27,7 +27,6 @@ export async function PUT(request, { params }) {
     const { newTitle, newContent } = await request.json();
     const slug = createSlug(newTitle);
 
-    // Ottieni la sessione dell'utente solo se è autenticato
     const session = await getServerSession(authOptions);
 
     if (!session || !session.user) {
@@ -38,10 +37,8 @@ export async function PUT(request, { params }) {
     }
 
     await connectMongoDB();
-
-    // Esegui una query per recuperare il post dal database
     const post = await Post.findOne({ _id: id });
-
+ 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
@@ -53,7 +50,6 @@ export async function PUT(request, { params }) {
       );
     }
 
-    // Aggiorna il post nel database
     const updatedPost = await Post.findByIdAndUpdate(id, { title: newTitle, content: newContent, slug });
 
     if (!updatedPost) {

@@ -21,6 +21,6 @@ export default async function EditPost({ params }) {
   const { title, content } = post;
 
   return (
-    <EditPostForm id={id} title={title} content={content} />
+    <EditPostForm id={id} title={title} content={content} post={post} />
   );
 }

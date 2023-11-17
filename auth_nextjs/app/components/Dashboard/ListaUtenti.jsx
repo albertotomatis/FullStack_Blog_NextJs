@@ -36,8 +36,9 @@ const ListaUtenti = () => {
           <Link href="/creaPost" className="text-white hover:text-white">Crea post</Link>
         </button>
       </div>
-      
-      <Paginate users={users} role={filter} onRoleChange={setFilter} />
+      {session && session.user.role === "admin" && (
+          <Paginate users={users} role={filter} onRoleChange={setFilter} />
+        )}
 </div>
 </div>
   );

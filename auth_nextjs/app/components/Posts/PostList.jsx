@@ -1,14 +1,18 @@
 'use client';
 import Link from "next/link";
-import { BiEdit } from "react-icons/bi";
-import RemoveBtn from "@/app/components/Posts/RemoveBtn";
-import { ImPacman } from "react-icons/im";
-import htmlSanitizer from "@/utils/sanitizeHtml";
 import { useState, useEffect } from 'react';
-import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
+import { useSession } from "next-auth/react";
+import RemoveBtn from "@/app/components/Posts/RemoveBtn";
+import htmlSanitizer from "@/utils/sanitizeHtml";
+// react icons
+import { BiEdit } from "react-icons/bi";
+import { ImPacman } from "react-icons/im";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
+import { HiOutlineHeart } from "react-icons/hi";
+import { HiHeart } from "react-icons/hi";
+
 
 export default function PostList() {
   const router = useRouter();
@@ -23,9 +27,7 @@ export default function PostList() {
       try {
         const response = await fetch(`http://localhost:3000/api/listaPost?page=${page}`);
         const data = await response.json();
-  
-        console.log("Fetched Data:", data);
-  
+
         setPosts(data.posts);
         setPageCount(Math.ceil(data.totalPosts / postsPerPage));
       } catch (error) {
@@ -44,14 +46,27 @@ export default function PostList() {
       router.push(`/blog?page=${pageNumber}`);
     }
   };
+
+  const handleAddToFavorites = async (postId) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/addFavoritePost', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: session.user.id, postId }),
+      });
+    } catch (error) {
+      console.error('Errore durante l\'aggiunta del post ai preferiti', error);
+    }
+  };
   
   const formatItalianDate = (date) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Intl.DateTimeFormat('it-IT', options).format(new Date(date));
   };
 
-  const uniqueCategories = [...new Set(posts.map((post) => post.category))];
-
+  
   return (
     <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8 pt-16">
@@ -101,16 +116,28 @@ export default function PostList() {
                 </svg>
               </Link>
             </div>
+            {/* aggiungi ai preferiti */}
+            {session ? (
+              <button
+                onClick={() => handleAddToFavorites(post._id)}
+                className="text-[#333333] font-medium pt-5"
+              >
+              {session?.user?.postPreferiti && session.user.postPreferiti.includes(post._id) ? (
+                <HiHeart size={24} />
+              ) : (
+                <HiOutlineHeart size={24} />
+              )}
+              </button>
+            ) : null}
             <div className="flex gap-3">
-              {session ? (
-                session.user.role === "admin" ||
-                (session.user.role === "author" && session.user.id === post.id) ? (
+            {session ? (
+                (session.user.role === "admin" || session.user.id === post.author) ? (
                   <Link href={`/editPost/${post._id}`} className="text-[#4285f4] font-medium hover:underline pt-5">
                     <BiEdit size={24} />
                   </Link>
                 ) : null
               ) : null}
-              <RemoveBtn id={post._id} />
+              <RemoveBtn id={post._id} post={post} />
             </div>
           </article>
         ))}

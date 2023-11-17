@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 
-export default function EditPostForm({ id, title, content }) {
+export default function EditPostForm({ id, title, content, post }) {
+  console.log("Post in EditPostForm:", post);
   const [newTitle, setNewTitle] = useState(title);
   const [newContent, setNewContent] = useState(content);
   const [errors, setErrors] = useState({});
@@ -20,12 +21,14 @@ export default function EditPostForm({ id, title, content }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("handleSubmit function called");
     if (newTitle.trim() === "" || newContent.trim() === "") {
       setErrors({ message: "Titolo e contenuto sono obbligatori" });
       return;
     }
 
     try {
+      console.log("Inside try block");
       // Effettua la richiesta di modifica
       const res = await fetch(`/api/modificaPost/${id}`, {
         method: "PUT",
@@ -62,8 +65,7 @@ export default function EditPostForm({ id, title, content }) {
   return (
     <section className="bg-gray-50 h-screen flex items-center justify-center">
       {session ? (
-        session.user.role === "admin" ||
-        (session.user.role === "author" && session.user.id === id) ? (
+        (session.user.role === "admin" || session.user.id === post.author) ? (
           <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-20 shadow-lg">
             <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
               Modifica Post
@@ -74,8 +76,8 @@ export default function EditPostForm({ id, title, content }) {
               action="#"
               method="POST"
             >
-              {/* Titolo */}
-              <div>
+               {/* Titolo */}
+               <div>
                 <label htmlFor="title" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
                   Titolo
                 </label>
