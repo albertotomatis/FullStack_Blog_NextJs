@@ -35,6 +35,7 @@ export const authOptions = {
             email: user.email,
             role: user.role, 
             emailVerified: user.emailVerified,
+            postPreferiti: user.postPreferiti || [],
           };
         } catch (error) {
           console.error("Error: ", error);
@@ -57,6 +58,7 @@ export const authOptions = {
         session.user.email = token.email;
         session.user.role = token.role;
         session.user.emailVerified = token.emailVerified;
+        session.user.postPreferiti = token.postPreferiti || [];
       }
     // DEBUG
     //console.log("Session data:", session);
@@ -80,6 +82,7 @@ export const authOptions = {
           email: dbUser.email,
           role: dbUser.role,
           emailVerified: dbUser.emailVerified,
+          postPreferiti: dbUser.postPreferiti || [],
         };
       } catch (error) {
         console.error("Error in JWT callback:", error);

@@ -10,7 +10,7 @@ import { BiEdit } from "react-icons/bi";
 import { ImPacman } from "react-icons/im";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
-import { HiOutlineHeart } from "react-icons/hi";
+import { HiOutlineHeart } from "react-icons/hi"; 
 import { HiHeart } from "react-icons/hi";
 
 
@@ -117,18 +117,25 @@ export default function PostList() {
               </Link>
             </div>
             {/* aggiungi ai preferiti */}
-            {session ? (
-              <button
-                onClick={() => handleAddToFavorites(post._id)}
-                className="text-[#333333] font-medium pt-5"
-              >
-              {session?.user?.postPreferiti && session.user.postPreferiti.includes(post._id) ? (
-                <HiHeart size={24} />
-              ) : (
-                <HiOutlineHeart size={24} />
-              )}
-              </button>
-            ) : null}
+
+  {session ? (
+    <button
+      onClick={() => handleAddToFavorites(post._id)}
+      className="text-[#333333] font-medium pt-5"
+    >
+      {/*
+        Verifica se il post è nei preferiti dell'utente.
+        Se sì, mostra un cuore rosso, altrimenti mostra un cuore vuoto.
+      */}
+      {session.user.postPreferiti && session.user.postPreferiti.includes(post._id) ? (
+        <HiHeart size={24} className="text-red-500" />
+      ) : (
+        <HiOutlineHeart size={24} />
+      )}
+    </button>
+  ) : null}
+  
+
             <div className="flex gap-3">
             {session ? (
                 (session.user.role === "admin" || session.user.id === post.author) ? (
