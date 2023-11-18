@@ -56,14 +56,14 @@ export default async function SinglePost({ params }) {
             </div>
             <div className="flex gap-3">
               {session ? (
-                session.user.role === "admin" ||
-                (session.user.role === "author" && session.user.id === post.id) ? (
-                  <Link href={`/editPost/${post._id}`} className="text-[#4285f4] font-medium hover:underline pt-5">
-                    <BiEdit size={24} />
+                (session.user.role === "admin" || session.user.id === post.author) ? (
+                  <Link href={`/editPost/${post._id}`} 
+                    className="text-[#4285f4] font-medium hover:underline pt-5">
+                      <BiEdit size={24} />
                   </Link>
                 ) : null
               ) : null}
-              <RemoveBtn id={post._id} />
+              <RemoveBtn id={post._id} post={post} />
             </div>
       </article>
       </div>
