@@ -17,6 +17,7 @@
 -  Categories
 -  Pagination
 -  Search with Filter
+-  Add post to favorites
 -  Dashboard
 
 ## ⚙️ &nbsp;Installazione
