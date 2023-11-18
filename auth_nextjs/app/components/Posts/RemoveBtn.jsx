@@ -23,7 +23,7 @@ export default function RemoveBtn({ id, post }) {
   const { data: session } = useSession();
  
   return (
-    session && (session.user.role === "admin" || session.user.id === post.author) ? (
+    session && post && (session.user.role === "admin" || session.user.id === post.author) ? (
       <button onClick={removeTopic} className="text-red-400 pt-5">
         <HiOutlineTrash size={24} />
       </button>

@@ -48,4 +48,12 @@ a:hover {
     color: #007d66;  
 }
 
- 
+.pagination li {
+    display: none;
+  }
+  
+  .pagination .previous,
+  .pagination .next {
+    display: inline-block;
+  }
+

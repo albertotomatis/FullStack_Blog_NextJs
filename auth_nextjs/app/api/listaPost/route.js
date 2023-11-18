@@ -6,19 +6,24 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import isUserAuthorizedForPost from "@/utils/authorization";
 
 export async function GET(request) {
-    await connectMongoDB();
-     // current page
-    const page = request.nextUrl.searchParams.get("page") || 0
-    const postPerPage = 4;
+  await connectMongoDB();
+  
+  // Current page
+  const page = parseInt(request.nextUrl.searchParams.get("page")) || 0;
+  const postPerPage = 4;
 
-     // Ordina i post in base alla data di creazione (createdAt) in ordine decrescente
-     const posts = await Post.find()
-     .sort({ createdAt: -1 })
-     .skip(page * postPerPage)
-     .limit(postPerPage)
-     ;
-     return NextResponse.json({ posts });
+  // Ottieni il numero totale di post disponibili
+  const totalPosts = await Post.countDocuments();
+
+  // Ordina i post in base alla data di creazione (createdAt) in ordine decrescente
+  const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .skip(page * postPerPage)
+      .limit(postPerPage);
+
+  return NextResponse.json({ posts, totalPosts });
 }
+
 
 export async function DELETE(request) {
     const id = request.nextUrl.searchParams.get("id");
