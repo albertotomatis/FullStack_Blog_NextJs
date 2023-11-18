@@ -13,14 +13,22 @@ import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { HiOutlineHeart } from "react-icons/hi"; 
 import { HiHeart } from "react-icons/hi";
 
-
 export default function PostList() {
   const router = useRouter();
   const { data: session } = useSession();
+  const [favoritePosts, setFavoritePosts] = useState([]);
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [postsPerPage] = useState(4);
   const [pageCount, setPageCount] = useState(0);
+
+  // Simulazione di post preferiti (da sostituire con i dati reali dal tuo contesto)
+  const userFavoritePosts = session?.user?.postPreferiti || [];
+
+  // Inizializza gli stati dei post preferiti quando il componente monta
+  useEffect(() => {
+    setFavoritePosts(userFavoritePosts);
+  }, [userFavoritePosts]);
 
   useEffect(() => {
     const fetchPosts = async (page) => {
@@ -56,6 +64,9 @@ export default function PostList() {
         },
         body: JSON.stringify({ userId: session.user.id, postId }),
       });
+      if (!favoritePosts.includes(postId)) {
+        setFavoritePosts((prevFavoritePosts) => [...prevFavoritePosts, postId]);
+      }
     } catch (error) {
       console.error('Errore durante l\'aggiunta del post ai preferiti', error);
     }
@@ -66,7 +77,6 @@ export default function PostList() {
     return new Intl.DateTimeFormat('it-IT', options).format(new Date(date));
   };
 
-  
   return (
     <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8 pt-16">
@@ -119,20 +129,16 @@ export default function PostList() {
             {/* aggiungi ai preferiti */}
 
   {session ? (
-    <button
-      onClick={() => handleAddToFavorites(post._id)}
-      className="text-[#333333] font-medium pt-5"
-    >
-      {/*
-        Verifica se il post è nei preferiti dell'utente.
-        Se sì, mostra un cuore rosso, altrimenti mostra un cuore vuoto.
-      */}
-      {session.user.postPreferiti && session.user.postPreferiti.includes(post._id) ? (
-        <HiHeart size={24} className="text-red-500" />
-      ) : (
-        <HiOutlineHeart size={24} />
-      )}
-    </button>
+ <button
+ onClick={() => handleAddToFavorites(post._id)}
+ className={`text-[#333333] font-medium pt-5 ${favoritePosts.includes(post._id) ? 'text-red-500' : ''}`}
+>
+ {favoritePosts.includes(post._id) ? (
+   <HiHeart size={24} />
+ ) : (
+   <HiOutlineHeart size={24} />
+ )}
+</button>
   ) : null}
   
 
@@ -161,6 +167,5 @@ export default function PostList() {
         </button>
       </div>
     </div>
-    );
-  }
-
+  );
+}
