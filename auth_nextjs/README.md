@@ -22,10 +22,16 @@
 
 ## ⚙️ &nbsp;Installazione
 
-###  1️⃣ &nbsp;Crea il database in MongoDB
-###  2️⃣ &nbsp;Inserisci il primo utente con ruolo di admin.
-###  3️⃣ &nbsp;File .env
-#### Crea il file '.env' e aggiungi le seguenti righe.
+###  1️⃣ &nbsp;Importa i dati di default nel database
+###
+- Importa i file 'user.json' e 'post.json' nel tuo database MongoDB.
+###  2️⃣ &nbsp; Login: Le password sono salvate con hashing + salt 
+###
+- Utilizza "Segreta2023!" per accedere.
+###  3️⃣ &nbsp; Configurazione del file .env
+###
+- Crea un file chiamato '.env'.
+- Aggiungi le seguenti righe al file '.env':
 
 ```bash
 MONGODB_URI =
