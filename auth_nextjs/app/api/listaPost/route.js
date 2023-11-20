@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/mongodb";
 import Post from "@/models/post";
+import User from "@/models/user";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -53,7 +54,29 @@ export async function DELETE(request) {
       );
     }
 
+    // Recupera gli utenti che hanno il post nei preferiti
+    const usersWithPostInFavorites = await User.find({ postPreferiti: id });
+
+    // Rimuovi l'ID del post dall'array postPreferiti di ciascun utente
+    const removalPromises = usersWithPostInFavorites.map(async (user) => {
+      user.postPreferiti = user.postPreferiti.filter((postId) => postId !== id);
+      await user.save();
+    });
+
+    // Aspetta che tutte le promise di salvataggio siano risolte
+    await Promise.all(removalPromises);
+
+    // Elimina il post dal database
     await Post.findByIdAndDelete(id);
+
+    // Rimuovi l'ID del post dall'array postPreferiti dell'utente
+    const user = await User.findById(session.user.id);
+    user.postPreferiti = user.postPreferiti.filter(postId => postId.toString() !== id.toString());
+    await user.save();
+
+    // Recupera gli aggiornamenti dei post
     const updatedPosts = await Post.find().sort({ createdAt: -1 });
+
+    // Restituisci la risposta JSON con gli aggiornamenti dei post
     return NextResponse.json({ posts: updatedPosts }, { status: 200 });
 }
