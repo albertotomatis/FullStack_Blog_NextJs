@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { validateFormData, handleInputChange } from "@/app/components/Auth/Validation";
 import { isValidEmail, isValidName } from "@/utils/validation";
 import { HiEye, HiEyeOff } from 'react-icons/hi';
@@ -11,6 +11,7 @@ import { HiEye, HiEyeOff } from 'react-icons/hi';
 export default function RegisterForm() {
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === 'admin';
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -57,7 +58,8 @@ export default function RegisterForm() {
       if (res.ok) {
         const form = e.target;
         form.reset();
-        setShowSuccessToast(true); // Mostra la notifica di successo
+        // Reindirizza a /email-verification solo dopo una registrazione riuscita
+        router.push('/email-verification');
       } else if (res.status === 400) {
         // Gestisci il caso in cui l'email esiste già
         const errorData = await res.json();
@@ -69,12 +71,6 @@ export default function RegisterForm() {
       console.error('Errore durante la registrazione:', error);
     }
   };
-
-  useEffect(() => {
-    if (showSuccessToast) {
-      toast.success('Registrazione utente avvenuta con successo.');
-    }
-  }, [showSuccessToast]);
 
   return (
     <section className="bg-gray-50 h-screen flex items-center justify-center">
