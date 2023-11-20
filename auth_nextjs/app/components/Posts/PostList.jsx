@@ -43,6 +43,9 @@ export default function PostList() {
         const response = await fetch(`http://localhost:3000/api/listaPost?page=${page}`);
         const data = await response.json();
 
+        //
+        console.log('Fetched posts:', data.posts); // Verifica se i dati dei post sono recuperati correttamente
+
         // Aggiorna lo stato dei post
         setPosts(data.posts);
 
@@ -117,15 +120,17 @@ export default function PostList() {
               </Link>
             </h2>
             <p className="mb-5">
-              {/* Sanificazione del contenuto */}
-              {post.content.length > 200 ? (
-                <>
-                  {post.content.slice(0, 200)}...
-                </>
-              ) : (
-                <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content) }} />
-              )}
-            </p>
+  {/* Sanificazione del contenuto */}
+  {post.content.length > 200 ? (
+    <>
+      <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content.slice(0, 200)) }} />
+      {post.content.length > 200 && '...'}
+    </>
+  ) : (
+    <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content) }} />
+  )}
+</p>
+
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-4">
                 <span className="font-medium">CodeLab Team</span>
