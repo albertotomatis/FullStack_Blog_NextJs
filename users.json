@@ -1,0 +1,61 @@
+[{
+  "_id": {
+    "$oid": "654411c39e1941378a9c3742"
+  },
+  "name": "admin",
+  "email": "sunny59@ethereal.email",
+  "emailVerified": true,
+  "password": "$2b$10$t17eE6puxw1U.Mj/SohIAuHN0Pms8hwJKYirwhsqMtSoE8/8hKJw.",
+  "role": "admin",
+  "createdAt": {
+    "$date": "2023-11-02T21:16:51.992Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-20T09:26:36.870Z"
+  },
+  "__v": 14,
+  "postPreferiti": []
+},
+{
+  "_id": {
+    "$oid": "6553aaef8b793bd024283f12"
+  },
+  "name": "rollin",
+  "email": "rollin.rippin0@ethereal.email",
+  "emailVerified": true,
+  "password": "$2b$10$VVsoFHCv6FCO.lRJ6qYqX.YgDh3.va5jv.xpmqwy6FiaHjxy/zU0G",
+  "role": "author",
+  "createdAt": {
+    "$date": "2023-11-14T17:14:23.060Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-20T08:24:22.834Z"
+  },
+  "__v": 27,
+  "postPreferiti": []
+},
+{
+  "_id": {
+    "$oid": "655b2fdcc3acf16a2db5e3ba"
+  },
+  "name": "Vivienne",
+  "email": "vivienne87@ethereal.email",
+  "emailVerified": true,
+  "password": "$2b$10$H38ZWajpkG/4a7Th6Rn9nOS3u3Rl2KndpfNyxfSsiVNRUmHALlXM6",
+  "role": "user",
+  "postPreferiti": [
+    {
+      "$oid": "655b18c5131a16fd67f60a4f"
+    },
+    {
+      "$oid": "655b1746131a16fd67f609db"
+    }
+  ],
+  "createdAt": {
+    "$date": "2023-11-20T10:07:24.990Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-20T10:17:02.063Z"
+  },
+  "__v": 2
+}]
