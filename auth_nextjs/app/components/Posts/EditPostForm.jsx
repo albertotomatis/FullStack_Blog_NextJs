@@ -3,13 +3,24 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import htmlSanitizer from "@/utils/sanitizeHtml";
 
 export default function EditPostForm({ id, title, content, post }) {
-  console.log("Post in EditPostForm:", post);
   const [newTitle, setNewTitle] = useState(title);
   const [newContent, setNewContent] = useState(content);
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+
+    // Quill Editor
+    var toolbarOptions = [
+      ['bold', 'italic', 'underline', 'strike'], 
+      ['link'],  
+    ];
+    const module = {
+        toolbar: toolbarOptions,
+    }
 
   // Cancellazione degli errori quando si inizia a modificare il modulo
   const clearErrors = () => {
@@ -28,7 +39,6 @@ export default function EditPostForm({ id, title, content, post }) {
     }
 
     try {
-      console.log("Inside try block");
       // Effettua la richiesta di modifica
       const res = await fetch(`/api/modificaPost/${id}`, {
         method: "PUT",
@@ -95,11 +105,14 @@ export default function EditPostForm({ id, title, content, post }) {
                 <label className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
                   Contenuto
                 </label>
+                { /* Quill Text Area */ }
                 <div className="mt-2">
-                  <textarea
-                    value={newContent}
-                    onChange={(e) => setNewContent(e.target.value)}
-                    rows="4"  className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                  <ReactQuill 
+                  modules={module}
+                  theme="snow" 
+                  value={newContent}
+                  onChange={setNewContent}
+                  className="block w-full rounded-md border-0 py-1.5 px-2.5 mb-10 text-gray-900  placeholder:text-gray-400  sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
