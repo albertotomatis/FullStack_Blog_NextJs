@@ -1,10 +1,24 @@
-export default function Home() {
-  return (
-  <div class="flex h-screen flex-col justify-center px-6 py-12 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Home page</h2>
-    </div>
-  </div>
+import Section1 from '@/app/components/blogComponents/section1'
+import Section2 from '@/app/components/blogComponents/Section2'
+import Section3 from '@/app/components/blogComponents/Section3'
+import Section4 from '@/app/components/blogComponents/Section4'
+
+export default function Blog() {
+    return (
+        <div>
+            <main className="contenitore">
+                <Section1 />
+            </main>
+            <section className="contenitore">
+                <Section2 />
+            </section>
+            <section className="contenitore">
+                <Section3 />
+            </section>
+            <section className="contenitore">
+                <Section4 />
+            </section>
+        </div>
     )
 }
 

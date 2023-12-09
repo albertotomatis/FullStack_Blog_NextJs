@@ -31,7 +31,7 @@ const SinglePost = ({ params }) => {
 
   const fetchPost = async () => {
     try {
-      const { post: fetchedPost } = await getPostBySlug(slug); // Accedi a fetchedPost.post
+      const { post: fetchedPost } = await getPostBySlug(slug); 
       console.log("Fetched Post:", fetchedPost);
       setPost(fetchedPost);
     } catch (error) {
