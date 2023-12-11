@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+.contenitore {
+    @apply xl:container xl:mx-auto flex flex-col items-center sm:flex-row sm:justify-between text-center py-6;
+}
+
+.input-text {
+    @apply mt-1 block w-60 px-3 py-2 bg-white border border-slate-300 text-sm placeholder-slate-500;
+    @apply focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500;
+}
+
+.header, .footer {
+    font-size: 1.3rem;
+    font-weight:bold;
+    font-family: 'Oswald', sans-serif; 
+    background-color: #eee;
+    color: #6cb2eb;
+    text-transform: uppercase;
+}
+
+.logo {
+    color: #333;
+}
+
+h1 {
+    color: #333;
+    font-size: 1.3rem;
+    font-weight:bold;
+    font-family: 'Oswald', sans-serif; 
+}
+
+.copyright {
+    text-transform: lowercase;
+}
 
 
 
