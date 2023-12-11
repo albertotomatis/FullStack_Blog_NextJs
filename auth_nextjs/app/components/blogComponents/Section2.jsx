@@ -54,7 +54,7 @@ export default function Section2() {
     );
   }
   
-  function Post({ post, isLatest }) {
+  function Post({ post }) {
     return (
       <div className="image rounded-md overflow-hidden">
         <Image src={post.image} width={600} height={600} />

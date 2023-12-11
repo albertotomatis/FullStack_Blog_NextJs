@@ -21,12 +21,16 @@ const postSchema = new Schema(
     },
     category: {
       type: String,
-      enum: ["nextjs", "mongoDB", "react", "tailwind"], 
+      enum: ["nextjs", "mongoDB", "react", "tailwind"],
       required: true,
+    },
+    likesCount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
 );
 
-const Post= models.Post || mongoose.model("Post", postSchema);
+const Post = models.Post || mongoose.model("Post", postSchema);
 export default Post;
