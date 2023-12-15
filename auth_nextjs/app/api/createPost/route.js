@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   await connectMongoDB();
-  const { title, content, author, category } = await req.json();
+  const { title, content, author, category, imageUrl  } = await req.json();
   try {
     const existingPost = await Post.findOne({ title });
     const slug = createSlug(title);
@@ -23,6 +23,7 @@ export async function POST(req) {
       author,
       slug,
       category,
+      imageUrl,
     });
 
     await newPost.save();

@@ -24,7 +24,7 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   const { id } = params;
   try {
-    const { newTitle, newContent } = await request.json();
+    const { newTitle, newContent, newImageUrl  } = await request.json();
     const slug = createSlug(newTitle);
 
     const session = await getServerSession(authOptions);
@@ -50,7 +50,7 @@ export async function PUT(request, { params }) {
       );
     }
 
-    const updatedPost = await Post.findByIdAndUpdate(id, { title: newTitle, content: newContent, slug });
+    const updatedPost = await Post.findByIdAndUpdate(id, { title: newTitle, content: newContent, slug, imageUrl: newImageUrl });
 
     if (!updatedPost) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });

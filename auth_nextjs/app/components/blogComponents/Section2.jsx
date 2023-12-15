@@ -57,7 +57,9 @@ export default function Section2() {
   function Post({ post }) {
     return (
       <div className="image rounded-md overflow-hidden">
-        <Image src={post.image} width={600} height={600} />
+        <div className="image rounded-md overflow-hidden"> 
+        <Image src={post.imageUrl} width={600} height={600} />
+      </div>
         <div className="info text-left p-4">
         <Link href={`/blog/category/${post.category}`} 
           className="bg-[#F5E9C4] text-[#333333] text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-10">

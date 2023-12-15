@@ -20,7 +20,6 @@ export default function Section1() {
         const response = await fetch('http://localhost:3000/api/latestPost/');
         const data = await response.json();
         setLatestPost(data.latestPost);
-        console.log('Ultimo Post:', data.latestPost);
       } catch (error) {
         console.error('Errore nel recupero dell\'ultimo post:', error);
       }
@@ -43,7 +42,7 @@ function Slide(post) {
   return (
     <div className="grid md:grid-cols-2">
       <div className="image rounded-md overflow-hidden"> 
-        <Image src={post.image} width={600} height={600} />
+        <Image src={post.imageUrl} width={600} height={600} />
       </div>
       <div className="info text-left">
         <Link href={`/blog/category/${post.category}`} 

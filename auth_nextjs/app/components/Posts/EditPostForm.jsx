@@ -10,6 +10,7 @@ import htmlSanitizer from "@/utils/sanitizeHtml";
 export default function EditPostForm({ id, title, content, post }) {
   const [newTitle, setNewTitle] = useState(title);
   const [newContent, setNewContent] = useState(content);
+  const [newImageUrl, setNewImageUrl] = useState(post.imageUrl); 
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
@@ -33,8 +34,8 @@ export default function EditPostForm({ id, title, content, post }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("handleSubmit function called");
-    if (newTitle.trim() === "" || newContent.trim() === "") {
-      setErrors({ message: "Titolo e contenuto sono obbligatori" });
+    if (newTitle.trim() === "" || newContent.trim() === "" || newImageUrl.trim() === "") {
+      setErrors({ message: "Titolo, contenuto e URL dell'immagine sono obbligatori" });
       return;
     }
 
@@ -45,7 +46,7 @@ export default function EditPostForm({ id, title, content, post }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ newTitle, newContent }),
+        body: JSON.stringify({ newTitle, newContent, newImageUrl}),
       });
 
       if (!res.ok) {
@@ -96,6 +97,20 @@ export default function EditPostForm({ id, title, content, post }) {
                     type="text"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              {/* URL dell'immagine */}
+              <div>
+                <label htmlFor="imageUrl" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+                  URL dell'immagine
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    value={newImageUrl}
+                    onChange={(e) => setNewImageUrl(e.target.value)}
                     className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
                   />
                 </div>

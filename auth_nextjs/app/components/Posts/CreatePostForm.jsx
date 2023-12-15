@@ -20,6 +20,7 @@ export default function CreatePostForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("nextjs");
+  const [imageUrl, setImageUrl] = useState("");
   const [errors, setErrors] = useState({});
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
@@ -31,7 +32,7 @@ export default function CreatePostForm() {
   // All'invio del form per creare il post
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    if (title.trim() === "" || content.trim() === "") {
+    if (title.trim() === "" || content.trim() === "" || imageUrl.trim() === "") {
       setErrors({ message: "Tutti i campi sono obbligatori" });
       return;
     }
@@ -49,7 +50,8 @@ export default function CreatePostForm() {
           title,
           content: sanitizedContent, // Utilizza il contenuto sanificato
           author: session.user.id,
-          category, // Includi l'ID dell'autore dalla sessione
+          category,
+          imageUrl,
         }),
       });
 
@@ -124,6 +126,18 @@ export default function CreatePostForm() {
                   </select>
                 </div>
               </div>
+              {/* URL Immagine */}
+                <label htmlFor="imageUrl" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+                URL dell'immagine
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+                  />
+                </div>
               {/* Contenuto */}
               <div>
                 <label className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
