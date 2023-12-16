@@ -138,7 +138,7 @@ export default function PostList() {
 
               {/* aggiungi ai preferiti */}
               {session && (
-                <div>
+                <div className="flex items-center space-x-4">
                   <button
                     onClick={() => handleAddToFavorites(post._id)}
                     className={`text-[#333333] font-medium pt-5 ${favoritePosts.includes(post._id) ? 'text-red-500' : ''}`}
@@ -149,6 +149,8 @@ export default function PostList() {
                       <HiOutlineHeart size={24} />
                     )}
                   </button>
+                   {/* Modifica e Rimuovi solo se l'utente è autorizzato */}
+                   <div className="flex items-center space-x-4">
                   {session.user.role === 'admin' || session.user.id === String(post.author._id) ? (
                     <>
                       {console.log("User is authorized")}
@@ -158,6 +160,7 @@ export default function PostList() {
                       <RemoveBtn id={post._id} post={post} />
                     </>
                   ) : null}
+                  </div>
                 </div>
               )}
             </article>
