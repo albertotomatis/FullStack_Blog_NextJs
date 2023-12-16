@@ -132,15 +132,13 @@ const SinglePost = ({ params }) => {
             ) : null}
             </div>
             <div className="flex gap-3">
-              {session ? (
-                (session.user.role === "admin" || session.user.id === post.author) ? (
-                  <Link href={`/editPost/${post._id}`}
-                    className="text-[#4285f4] font-medium hover:underline pt-5">
-                      <BiEdit size={24} />
-                    
-                  </Link>
-                ) : null
-              ) : null}
+            {session ? (
+              (session.user.role === "admin" || session.user.id === String(post.author._id)) ? (
+                <Link href={`/editPost/${post._id}`} className="text-[#4285f4] font-medium hover:underline pt-5">
+                  <BiEdit size={24} />
+                </Link>
+              ) : null
+            ) : null}
               <RemoveBtn id={post._id} post={post} />
             </div>
           </article>
