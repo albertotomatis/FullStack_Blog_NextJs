@@ -14,11 +14,11 @@ export async function GET(req) {
   const slug = match[1]; // Estrae lo slug dall'espressione regolare
 
   await connectMongoDB();
-  const post = await Post.findOne({ slug: slug });
+  const post = await Post.findOne({ slug: slug }).populate('author', 'name role');
+
   if (!post) {
     return NextResponse.json({ message: "Error" }, { status: 404 });
   }
 
   return NextResponse.json({ message: "Success", post }, { status: 200 });
 }
-

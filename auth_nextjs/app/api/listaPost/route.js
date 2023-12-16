@@ -20,7 +20,8 @@ export async function GET(request) {
   const posts = await Post.find()
       .sort({ createdAt: -1 })
       .skip(page * postPerPage)
-      .limit(postPerPage);
+      .limit(postPerPage)
+      .populate('author', 'name role');
 
   return NextResponse.json({ posts, totalPosts });
 }

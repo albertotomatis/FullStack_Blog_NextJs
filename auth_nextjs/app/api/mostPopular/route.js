@@ -8,7 +8,8 @@ export async function GET(request) {
     // Ottiene i due post con più "mi piace"
     const topLikedPosts = await Post.find()
       .sort({ likesCount: -1 }) // Ordina in ordine decrescente in base a likesCount
-      .limit(2); // Limita a due risultati
+      .limit(2) 
+      .populate('author', 'name role');
     return NextResponse.json({ topLikedPosts });
   } catch (error) {
     console.error(error);

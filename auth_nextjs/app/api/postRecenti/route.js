@@ -8,7 +8,8 @@ export async function GET(request) {
   // Ottiene gli ultimi 4 post ordinati per data di creazione (createdAt) in ordine decrescente
   const allRecentPosts = await Post.find()
     .sort({ createdAt: -1 })
-    .limit(4);
+    .limit(4)
+    .populate('author', 'name role');
 
   // Esclude il primo post, prendi i successivi 3
   const recentPosts = allRecentPosts.slice(1, 4);

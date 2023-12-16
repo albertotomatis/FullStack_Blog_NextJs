@@ -133,7 +133,8 @@ export default function PostList() {
 
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-4">
-                <span className="font-medium">CodeLab Team</span>
+              <span>{post.author.name}</span>
+              <span>({post.author.role})</span>
               </div>
               <Link href={`/blog/${post.slug}`}
                 className="inline-flex items-center font-medium hover:underline">

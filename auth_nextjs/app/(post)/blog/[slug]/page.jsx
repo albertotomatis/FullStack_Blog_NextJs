@@ -115,7 +115,8 @@ const SinglePost = ({ params }) => {
             </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-4">
-                <span className="font-medium">CodeLab Team</span>
+              <span>{post.author.name}</span>
+              <span>({post.author.role})</span>
               </div>
             {session ? (
               <button
