@@ -39,6 +39,10 @@ const userSchema = new Schema(
     passwordResetTokenExpiry: {
       type: Date,
     },  
+    avatarUrl: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

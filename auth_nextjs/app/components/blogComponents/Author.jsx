@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Author({ author }) {
     return (
         <div className="author flex py-5">
-            <Image src={"/images/authors/author1.png"} width={60} height={60} className="rounded-full"></Image>
+            <Image src={author.avatarUrl} width={60} height={60} className="rounded-full"></Image>
             <div className="flex flex-col justify-center px-4">
                 {author && (
                     <Link href={"/"}

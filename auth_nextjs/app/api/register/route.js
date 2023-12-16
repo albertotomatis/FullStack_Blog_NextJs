@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 
 export async function POST(req) {
   try {
-    const { name, email, password, role } = await req.json();
+    const { name, email, password, role, avatarUrl } = await req.json();
     await connectMongoDB();
 
     // Verifica se il nome è valido
@@ -68,7 +68,7 @@ export async function POST(req) {
         { status: 500 }
       );
     }
-    const user = await User.create({ name, email, password: hashedPassword, role, emailVerificationToken: verificationToken });
+    const user = await User.create({ name, email, password: hashedPassword, role, emailVerificationToken: verificationToken, avatarUrl });
 
     // Reindirizza l'utente alla pagina di verifica dell'email
     return NextResponse.redirect('http://localhost:3000/email-verification-success');

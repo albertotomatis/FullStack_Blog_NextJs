@@ -1,3 +1,4 @@
+'use client';
 import ReactPaginate from 'react-paginate';
 import { useState } from "react";
 import Link from "next/link";
@@ -67,13 +68,11 @@ const Paginate = ({ users, role, onRoleChange  }) => {
             <tbody>
           {/* Mostra solo gli utenti paginati dalla lista filtrata */}
           {paginatedUsers.map((user, index) => (
-            <tr key={user._id} className={index % 2 === 0 ? 'bg-green-100' : 'bg-white'}>
-              <td className="border-2 p-3">{user.name}</td>
-              <td className="border-2 p-3">{user.email}</td>
-              <td className="border-2 p-3">{user.role}</td>
-              <td className="border-2 p-3">
-                <DeleteUser id={user._id} />
-              </td>
+        <tr key={user._id} className={index % 2 === 0 ? 'bg-green-100' : 'bg-white'}>
+          <td className="border-2 p-3">{user.name}</td>
+          <td className="border-2 p-3">{user.email}</td>
+          <td className="border-2 p-3">{user.role}</td>
+              <DeleteUser id={user._id} />
             </tr>
           ))}
         </tbody>
@@ -103,6 +102,7 @@ const Paginate = ({ users, role, onRoleChange  }) => {
   </tr>
 </tfoot>
           </table>
+          
           </div>
   );
 };

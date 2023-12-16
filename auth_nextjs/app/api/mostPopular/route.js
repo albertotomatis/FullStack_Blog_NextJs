@@ -9,7 +9,7 @@ export async function GET(request) {
     const topLikedPosts = await Post.find()
       .sort({ likesCount: -1 }) // Ordina in ordine decrescente in base a likesCount
       .limit(2) 
-      .populate('author', 'name role');
+      .populate('author', 'name role avatarUrl');
     return NextResponse.json({ topLikedPosts });
   } catch (error) {
     console.error(error);

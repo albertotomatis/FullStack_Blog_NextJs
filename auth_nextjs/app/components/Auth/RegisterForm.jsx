@@ -18,6 +18,7 @@ export default function RegisterForm() {
     email: '',
     password: '',
     role: 'user',
+    avatarUrl: '',
   });
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -143,6 +144,25 @@ export default function RegisterForm() {
                 {errors.password}
               </p>
             )}
+          </div>
+           {/* URL Avatar */}
+          <div>
+            <label htmlFor="imageUrl" className="block text-sm font-bold leading-6 text-gray-900 px-2.5">
+              URL Avatar
+            </label>
+            <div className="mt-2">
+              <input
+                onChange={handleChange}
+                name="avatarUrl"
+                type="text"
+                className="block w-full rounded-md border-0 py-1.5 px-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-900 sm:text-sm sm:leading-6"
+              />
+              {errors.imageUrl && (
+                <p className="text-red-400 font-bold w-fit text-sm py-1 px-3 rounded-md mt-2">
+                  {errors.imageUrl}
+                </p>
+              )}
+            </div>
           </div>
           {/* Ruolo */}
           {isAdmin && (

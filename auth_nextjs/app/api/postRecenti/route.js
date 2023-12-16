@@ -9,7 +9,7 @@ export async function GET(request) {
   const allRecentPosts = await Post.find()
     .sort({ createdAt: -1 })
     .limit(4)
-    .populate('author', 'name role');
+    .populate('author', 'name role avatarUrl');
 
   // Esclude il primo post, prendi i successivi 3
   const recentPosts = allRecentPosts.slice(1, 4);

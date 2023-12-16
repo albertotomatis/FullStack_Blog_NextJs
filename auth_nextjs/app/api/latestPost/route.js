@@ -6,7 +6,7 @@ export async function GET(request) {
   await connectMongoDB();
   
   // Ottiene il più recente ordinato per data di creazione (createdAt) in ordine decrescente
-  const latestPost = await Post.findOne().sort({ createdAt: -1 }).populate('author', 'name role');
+  const latestPost = await Post.findOne().sort({ createdAt: -1 }).populate('author', 'name role avatarUrl');
 
   if (!latestPost) {
     return NextResponse.json({ error: "Post not found" }, { status: 404 });
