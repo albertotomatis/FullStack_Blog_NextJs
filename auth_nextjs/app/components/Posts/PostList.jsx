@@ -95,8 +95,6 @@ export default function PostList() {
       {/* Posts */}
       <div className="grid gap-8 lg:grid-cols-2">
         {posts.map((post) => {
-          const isAdminOrAuthor = session?.user?.role === "admin" || session?.user?.id === String(post.author);
-
           return (
             <article key={post._id} className="p-6 bg-white rounded-lg border border-[#e0e0e0]">
               <div className="flex justify-between items-center mb-5 text-gray-600">

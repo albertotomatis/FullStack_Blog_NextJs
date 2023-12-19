@@ -1,5 +1,6 @@
 'use client';
 import Link from "next/link";
+import Image from 'next/image';
 import { BiEdit } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import RemoveBtn from "@/app/components/Posts/RemoveBtn";
@@ -7,6 +8,7 @@ import { ImPacman } from "react-icons/im";
 import htmlSanitizer from "@/utils/sanitizeHtml";
 import { HiOutlineHeart, HiHeart } from "react-icons/hi";
 import { useState, useEffect } from 'react';
+import Author from '@/app/components/blogComponents/Author';
 
 const getPostBySlug = async (slug) => {
   try {
@@ -100,6 +102,9 @@ const SinglePost = ({ params }) => {
       <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8 pt-16">
         {post && (
           <article key={post._id} className="p-6 bg-white rounded-lg border border-[#e0e0e0]">
+             <div className="image rounded-md overflow-hidden mb-10"> 
+              <Image src={post.imageUrl} width={600} height={600} />
+            </div>
             <div className="flex justify-between items-center mb-5 text-gray-600">
               <span className="bg-[#F5E9C4] text-[#333333] text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded">
                 <ImPacman size={14} className="mr-1" />
@@ -110,13 +115,12 @@ const SinglePost = ({ params }) => {
               )}
             </div>
             <h2 className="mb-2 text-3xl font-bold">{post.title}</h2>
-            <p className="my-5">
+            <p className="my-5 text-left">
               <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content) }} />
             </p>
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-4">
-              <span>{post.author.name}</span>
-              <span>({post.author.role})</span>
+              <Author author={post.author} />
               </div>
             {session ? (
               <button

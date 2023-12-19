@@ -21,7 +21,7 @@ export async function GET(request) {
       .sort({ createdAt: -1 })
       .skip(page * postPerPage)
       .limit(postPerPage)
-      .populate('author', 'name role');
+      .populate('author', 'name role avatarUrl');
 
   return NextResponse.json({ posts, totalPosts });
 }
