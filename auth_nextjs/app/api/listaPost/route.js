@@ -11,7 +11,7 @@ export async function GET(request) {
   
   // Current page
   const page = parseInt(request.nextUrl.searchParams.get("page")) || 0;
-  const postPerPage = 4;
+  const postPerPage = 9;
 
   // Ottieni il numero totale di post disponibili
   const totalPosts = await Post.countDocuments();

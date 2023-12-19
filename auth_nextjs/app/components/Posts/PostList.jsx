@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 import { useSession } from "next-auth/react";
+import Image from 'next/image';
+import Author from '@/app/components/blogComponents/Author';
 import RemoveBtn from "@/app/components/Posts/RemoveBtn";
 import htmlSanitizer from "@/utils/sanitizeHtml";
 import { BiEdit } from "react-icons/bi";
@@ -16,7 +18,7 @@ export default function PostList() {
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const postsPerPage = 4;
+  const postsPerPage = 9;
   const [totalPages, setTotalPages] = useState(0);
 
   // Inizializza gli stati dei post preferiti solo se la sessione è attiva
@@ -81,22 +83,16 @@ export default function PostList() {
   };
 
   return (
-    <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-      <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8 pt-16">
-        <h2 className="mb-4 text-4xl lg:text-5xl font-extrabold">Blog</h2>
-        <p className="font-light text-xl sm:text-2xl">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-        </p>
-        <p className="font-light text-xl sm:text-2xl">
-          Debitis porro non rem repellat aspernatur molestiae.
-        </p>
-      </div>
-
+    <div className="md:px-80 mb-4 top">
+          <h1 className="font-bold text-4xl text-center mb-10">Latest Posts</h1>
       {/* Posts */}
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {posts.map((post) => {
           return (
-            <article key={post._id} className="p-6 bg-white rounded-lg border border-[#e0e0e0]">
+            <article key={post._id} className="p-6 bg-white rounded-lg border border-[#e0e0e0]" >
+                  <div className="image rounded-md overflow-hidden mb-6"> 
+                  <Image src={post.imageUrl} width={600} height={600} />
+                </div>
               <div className="flex justify-between items-center mb-5 text-gray-600">
                 <Link href={`/blog/category/${post.category}`} className="bg-[#F5E9C4] text-[#333333] text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded">
                   <ImPacman size={14} className="mr-1" />
@@ -111,33 +107,28 @@ export default function PostList() {
               </h2>
               <p className="mb-5">
                 {/* Sanificazione del contenuto */}
-                {post.content.length > 200 ? (
+                {post.content.length > 250 ? (
                   <>
-                    <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content.slice(0, 200)) }} />
-                    {post.content.length > 200 && '...'}
+                    <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content.slice(0, 250)) }} />
+                    {post.content.length > 250 && '...'}
                   </>
                 ) : (
                   <span dangerouslySetInnerHTML={{ __html: htmlSanitizer(post.content) }} />
                 )}
               </p>
-
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-4">
-                  <span>{post.author.name}</span>
-                  <span>({post.author.role})</span>
-                </div>
-                <Link href={`/blog/${post.slug}`} className="inline-flex items-center font-medium hover:underline">
+              <Link href={`/blog/${post.slug}`} className="inline-flex items-center font-medium hover:underline mb-2">
                   Leggi di più
                   <svg className="ml-2 w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                   </svg>
                 </Link>
-              </div>
-
-              {/* aggiungi ai preferiti */}
-              {session && (
+              <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-4">
-                  <button
+                <Author author={post.author} />
+                </div>
+                {/* aggiungi ai preferiti */}
+                {session && (
+                <button
                     onClick={() => handleAddToFavorites(post._id)}
                     className={`text-[#333333] font-medium pt-5 ${favoritePosts.includes(post._id) ? 'text-red-500' : ''}`}
                   >
@@ -147,6 +138,11 @@ export default function PostList() {
                       <HiOutlineHeart size={24} />
                     )}
                   </button>
+                  )}
+              </div>
+              
+              {session && (
+                <div className="flex items-center space-x-4">
                    {/* Modifica e Rimuovi solo se l'utente è autorizzato */}
                    <div className="flex items-center space-x-4">
                   {session.user.role === 'admin' || session.user.id === String(post.author._id) ? (
@@ -191,6 +187,6 @@ export default function PostList() {
           nextClassName={'next'}
         />
       </div>
-    </div>
+</div>
   );
 }

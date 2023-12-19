@@ -45,7 +45,7 @@ export default function Section2() {
           {recentPosts.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {recentPosts.map((post) => (
-                <Post key={post._id} post={post} />
+                <Post key={post._id} post={post}/>
               ))}
             </div>
           )}
