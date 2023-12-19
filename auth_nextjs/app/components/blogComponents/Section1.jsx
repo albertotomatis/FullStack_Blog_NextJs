@@ -29,9 +29,9 @@ export default function Section1() {
   }, []); 
 
   return (
-    <div className="contenitore">
+    <div className="top">
       <div className="md:px-20">
-        <h1 className="font-bold text-5xl pb-12">Trending</h1>  
+        <h1 className="font-bold text-6xl pb-12 text-[#009688]">Blog</h1>  
         {latestPost && Slide(latestPost)}
       </div>
     </div>

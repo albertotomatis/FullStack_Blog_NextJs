@@ -74,10 +74,10 @@ export default function EditPostForm({ id, title, content, post }) {
   }, [showSuccessToast]);
 
   return (
-    <section className="bg-gray-50 h-screen flex items-center justify-center">
+    <section className="h-screen flex items-center justify-center contenitore top">
       {session ? (
         (session.user.role === "admin" || session.user.id === post.author) ? (
-          <div className="w-full p-6 bg-white rounded-lg shadow-md:mt-0 sm:max-w-md sm:p-20 shadow-lg">
+          <div className="p-6 bg-white rounded-lg border border-[#e0e0e0]">
             <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
               Modifica Post
             </h2>
@@ -131,7 +131,7 @@ export default function EditPostForm({ id, title, content, post }) {
                   />
                 </div>
               </div>
-              <button className="btn flex w-full justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900">
+              <button className="btn flex mx-auto justify-center px-3 py-1.5 rounded-lg text-sm font-semibold leading-6 text-slate-900">
                 Modifica Post
               </button>
               {errors.message && (
